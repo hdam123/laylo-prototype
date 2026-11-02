@@ -102,19 +102,32 @@ export const MUSIC = {
 };
 
 export const EVENTS = {
-  label: "Drop events",
   title: ["Pack the event,", "engage your crowd."],
-  feature: {
-    name: "Chris Lake + FNGRS CRSSD", img: I("chrislake.jpg"), avatar: I("fngrs.jpg"), href: CASE("chris-lake-fngrs-crssd"),
-    result: "Artist + promoter teamed up, sold out",
-    quote: "“We were just marveling at [presale performance] on a call yesterday... let’s just say we’ll sell out quickly.”",
-    who: "Lee Krysinski, FNGRS CRSSD",
-  },
   cards: [
-    { name: "Capitol Hill Block Party", result: "“We’re seeing more new sign-ups than ever before.”", img: I("capitol.jpg"), href: CASE("capitol-hill-block-party") },
-    { name: "Shambhala Music Festival", result: "Captured thousands of fan phone numbers in 2 days", img: I("shambhala.jpg"), href: CASE("shambhala-music-festival") },
-    { name: "CRSSD Fest", result: "Presale sold out in two hours", img: I("crssd.jpg"), href: CASE("crssd-fest") },
-    { name: "Outside Lands", result: "139% CTR on single day tickets", img: I("outside.jpg"), href: CASE("outside-lands") },
+    {
+      name: "Capitol Hill Block Party", result: "“We’re seeing more new sign-ups than ever before.”", img: I("capitol.jpg"), href: CASE("capitol-hill-block-party"),
+      // PLACEHOLDER testimonial (not from laylo.com); replace with a real quote.
+      quote: "“The lineup drop used to be a single post. Now it’s a moment our fans sign up for, and they show up for presale.”",
+      who: "Capitol Hill Block Party team",
+    },
+    {
+      name: "Shambhala Music Festival", result: "Captured thousands of fan phone numbers in 2 days", img: I("shambhala.jpg"), href: CASE("shambhala-music-festival"),
+      // PLACEHOLDER testimonial (not from laylo.com); replace with a real quote.
+      quote: "“Two days in, we had thousands of numbers from people who actually want to hear from us. That list is ours every year now.”",
+      who: "Shambhala marketing team",
+    },
+    {
+      name: "CRSSD Fest", result: "Presale sold out in two hours", img: I("crssd.jpg"), href: CASE("crssd-fest"),
+      // Real quote (laylo.com, Lee Krysinski of FNGRS CRSSD, from the Chris Lake + FNGRS CRSSD case study).
+      quote: "“We were just marveling at [presale performance] on a call yesterday... let’s just say we’ll sell out quickly.”",
+      who: "Lee Krysinski, FNGRS CRSSD",
+    },
+    {
+      name: "Outside Lands", result: "139% CTR on single day tickets", img: I("outside.jpg"), href: CASE("outside-lands"),
+      // PLACEHOLDER testimonial (not from laylo.com); replace with a real quote.
+      quote: "“Fans who got the drop alert clicked straight through to single-day tickets. It’s the most direct line we have to them.”",
+      who: "Outside Lands marketing team",
+    },
   ],
 };
 

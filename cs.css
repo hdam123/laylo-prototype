@@ -115,22 +115,14 @@
 .cs-mcard__foot .cs-who { margin-top: -4rem; }
 .cs-mcard__name { font-size: 24rem; font-weight: 500; line-height: 1; text-transform: uppercase; }
 
-/* ---------- Events (light blue) ---------- */
-.cs-events { padding: 106rem 60rem 110rem; background: var(--blue); color: var(--ink); }
-.cs-events__head { display: flex; flex-direction: column; align-items: center; gap: 16rem; }
-.cs-feature { position: relative; display: flex; width: 1320rem; height: 429rem; margin: 60rem auto 0; }
-.cs-feature__img { display: block; width: 652rem; height: 429rem; flex: none; overflow: hidden; background: #9cc7ee; }
-.cs-feature .cs-story__divider { position: static; margin-left: 16rem; flex: none; }
-.cs-feature__copy { flex: 1; padding-left: 76rem; display: flex; flex-direction: column; justify-content: space-between; }
-.cs-feature__copy .cs-h36 { width: 420rem; margin-top: 10rem; }
-.cs-feature__quote { width: 500rem; display: flex; flex-direction: column; gap: 16rem; }
-.cs-avatar { width: 48rem; height: 48rem; border-radius: 50%; object-fit: cover; }
-.cs-events .cs-grid { margin-top: 60rem; }
-.cs-events .cs-center { margin-top: 60rem; }
+/* ---------- Events (light blue; same layout as Merch) ---------- */
+.cs-events { padding: 70rem 60rem 70rem; background: var(--blue); color: var(--ink); }
+.cs-events .cs-merch__title { color: var(--ink); }
+.cs-events .cs-grid { margin-top: 50rem; }
 
 /* ---------- CTA ---------- */
 .cs-cta { padding: 106rem 60rem 110rem; background: var(--ink); color: #fff; }
-.cs-cta__copy { width: 430rem; margin: 80rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 20rem; text-align: center; font-size: 14rem; line-height: 1.2; }
+.cs-cta__copy { width: 430rem; margin: 32rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 20rem; text-align: center; font-size: 14rem; line-height: 1.2; }
 
 /* ---------- Mobile: stacked, no pin ---------- */
 @media (max-width: 767px) {

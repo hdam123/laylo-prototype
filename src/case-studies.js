@@ -296,35 +296,23 @@ function Music() {
     </section>`;
 }
 
+// Same layout as Merch: centred headline, four cards, a testimonial under each.
 function Events() {
   const root = useRef();
   useEntrance(root);
-  const f = EVENTS.feature;
   return html`
     <section class="cs-events" id="cs-events" ref=${root} data-nav="light">
-      <div class="cs-events__head">
-        <div class="cs-label" data-rise>${EVENTS.label}</div>
-        <h2 class="h-xl fC"><${Lines} lines=${EVENTS.title} /></h2>
-      </div>
-      <div class="cs-feature">
-        <a class="cs-feature__img" href=${f.href} target="_blank" rel="noopener" data-wipe><img src=${f.img} alt=${f.name} /></a>
-        <span class="cs-story__divider"></span>
-        <div class="cs-feature__copy">
-          <div data-rise>
-            <div class="cs-label">${f.name}</div>
-            <h3 class="cs-h36 fC">${f.result}</h3>
-          </div>
-          <div class="cs-feature__quote" data-rise="1">
-            <img class="cs-avatar" src=${f.avatar} alt="FNGRS CRSSD" />
-            <p class="cs-q24 fC">${f.quote}</p>
-            <p class="cs-label">${f.who}</p>
-          </div>
-        </div>
-      </div>
+      <h2 class="h-xl fC cs-merch__title"><${Lines} lines=${EVENTS.title} /></h2>
       <div class="cs-grid">
-        ${EVENTS.cards.map((c, i) => html`<div key=${c.name} class="cs-grid__cell"><${Card} c=${c} cat="Events" i=${i} /></div>`)}
+        ${EVENTS.cards.map((c, i) => html`
+          <div key=${c.name} class="cs-grid__cell">
+            <${Card} c=${c} i=${i} />
+            <div class="cs-merch__quote" data-rise=${i + 2}>
+              <p class="cs-body fA">${c.quote}</p>
+              <p class="cs-label cs-who">${c.who}</p>
+            </div>
+          </div>`)}
       </div>
-      <div class="cs-center" data-rise><${Tag} href="https://laylo.com/case-studies">View all events ›</${Tag}></div>
     </section>`;
 }
 
