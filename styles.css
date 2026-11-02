@@ -170,6 +170,8 @@ ul { list-style: none; }
 /* Version A2 (hero-a2.js): auto-advancing hero, three progress bars at the bottom. */
 .heroA2 .hero__left, .heroA2 .hero__stage { isolation: isolate; }
 .heroA2 .hero__shade { z-index: 3; }
+/* A2: the cycling drop-type word in brand purple. */
+.heroA2 .hero__word { color: var(--purple); }
 .heroA2__bars { position: absolute; left: 50%; bottom: 32rem; translate: -50% 0; z-index: 3; display: flex; gap: 6rem; }
 .heroA2__bar { width: 44rem; height: 2rem; border-radius: 2rem; background: rgba(255, 255, 255, .35); overflow: hidden; }
 .heroA2__barFill { display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
