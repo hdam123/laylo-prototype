@@ -4,7 +4,7 @@ import { html, A } from "./lib.js";
 // every channel. Drawn in HTML so text stays crisp; sized to match the centre SMS phone
 // (203.76 × 439.59 screen, styles.css .pf__screen). All content is PLACEHOLDER.
 const IMG = A("phone-a/card-2.jpg");
-const AVATAR = A("hero-portrait.jpg");
+const AVATAR = A("hero-olivia.jpg");
 
 const Status = ({ dark }) => html`
   <div class=${"ch__status" + (dark ? " is-dark" : "")}>

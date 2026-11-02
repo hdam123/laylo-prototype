@@ -22,15 +22,15 @@ function Card({ x, y, w, h, imgH, bg, r, gap, pb, size, link, color = "#000", im
 }
 const BASE = A("phone-a/base.jpg");
 const SCREENS = [
-  // TOUR: Sabrina Carpenter thread
+  // TOUR: Olivia Dean thread
   html`<img class="hero__base" src=${BASE} alt="" />
     <div class="hero__white" style=${box(0, 132.49, 230.72, 320.54)}></div>
     <div class="hero__white" style=${box(61.4, 32.96, 108.57, 57.52)}></div>
-    <img class="hero__avatar" src=${A("hero-portrait.jpg")} alt="" style=${box(97.82, 35.65, 34.9, 34.9)} />
-    <div class="hero__name nhg-md" style=${{ left: u(115.18), top: u(67.86), padding: u(3.23), borderRadius: u(11.25), fontSize: u(9.048), borderWidth: u(0.129) }}>Sabrina Carpenter</div>
+    <img class="hero__avatar" src=${A("hero-olivia.jpg")} alt="" style=${box(97.82, 35.65, 34.9, 34.9)} />
+    <div class="hero__name nhg-md" style=${{ left: u(115.18), top: u(67.86), padding: u(3.23), borderRadius: u(11.25), fontSize: u(9.048), borderWidth: u(0.129) }}>Olivia Dean</div>
     <${Bubble} x=${9.05} y=${132.49} w=${126.02} h=${34.39} bg="#e9e9ea" size=${7.755} pad=${7.5} r=${11.25} text="You’re in, tickets on sale 26 June, 10AM" />
     <${Bubble} x=${9.05} y=${169.46} w=${126.02} h=${34.39} bg="#e9e9ea" size=${7.755} pad=${7.5} r=${11.25} text="Claim your presale code to access today's presale!" />
-    <${Card} x=${9.05} y=${206.44} w=${126.02} h=${145.47} imgH=${102.71} bg="#e9e9ea" r=${12.68} gap=${4.23} pb=${8.46} size=${7.755} link=${5.17} padX=${7.5} img=${A("phone-a/card-1.jpg")} crop=${true} url="sabrinacarpenter.laylo.co" title="Get your presale code, the art of loving" />`,
+    <${Card} x=${9.05} y=${206.44} w=${126.02} h=${145.47} imgH=${102.71} bg="#e9e9ea" r=${12.68} gap=${4.23} pb=${8.46} size=${7.755} link=${5.17} padX=${7.5} img=${A("phone-a/card-1.jpg")} crop=${true} url="oliviadean.laylo.co" title="Get your presale code, the art of loving" />`,
   // LINEUP: concert photo card
   html`<img class="hero__base" src=${BASE} alt="" />
     <div class="hero__white" style=${box(0, 132.49, 230.72, 320.54)}></div>

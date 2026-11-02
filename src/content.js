@@ -12,7 +12,7 @@ export const NAV_LINKS = [
 // Hero: the word after "RUN THE PERFECT" cycles; each word has its own left image.
 export const HERO_WORDS = [
 // screen: which phone screen (hero.js SCREENS) goes with the word.
-  { word: "TOUR", img: A("hero-portrait.jpg"), screen: 0 },
+  { word: "TOUR", img: A("hero-olivia.jpg"), screen: 0 },
   { word: "PRE-SAVE", img: A("hero-presale.jpg"), screen: 2 },
   { word: "EVENT", img: A("hero-show.jpg"), screen: 4 },
   { word: "MERCH", img: A("hero-merch.jpg"), screen: 3 },
