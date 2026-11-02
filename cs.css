@@ -1,0 +1,164 @@
+/* Case Studies index (Figma 217:2155). Loaded after styles.css; same units: 1rem == 1 Figma px. */
+
+.cs-label { font-size: 10rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+.cs-h36 { margin-top: 20rem; font-size: 36rem; font-weight: 500; line-height: 1; }
+.cs-q24 { font-size: 24rem; font-weight: 500; line-height: 1.15; }
+.cs-body { font-size: 14rem; line-height: 1.2; }
+.cs-sub { margin-top: 10rem; }
+.cs-who { margin-top: 8rem; }
+.cs-center { display: flex; justify-content: center; }
+
+/* Tag component: outline (dark / light) and filled purple. */
+.cs-tag { cursor: pointer; transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease); }
+.cs-tag--dark { color: var(--ink); }
+.cs-tag--dark:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cs-tag--light { color: #fff; }
+.cs-tag--light:hover { background: #fff; color: var(--ink); border-color: #fff; }
+.cs-tag--filled { background: var(--purple); border-color: var(--purple); color: #fff; }
+.cs-tag--filled:hover { background: #5246f0; border-color: #5246f0; }
+.cs-tag:hover { transform: translateY(-1rem); }
+
+/* ---------- Hero ---------- */
+.cs-hero { position: relative; height: 100vh; height: 100svh; min-height: 600rem; overflow: hidden; background: var(--ink); color: #fff; }
+.cs-hero__img { position: absolute; inset: 0; overflow: hidden; }
+.cs-hero__img img { width: 100%; height: 115%; margin-top: -7.5%; object-fit: cover; will-change: transform; }
+.cs-hero__copy {
+  position: absolute; left: 50%; top: 50%; z-index: 2; width: 540rem; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10rem; text-align: center;
+}
+.cs-hero__sub { font-size: 14rem; line-height: 1.2; }
+.cs-hero__cta { margin-top: 0; }
+
+/* ---------- Featured drops ---------- */
+.cs-feat { position: relative; padding: 106rem 0 110rem; background: var(--ink); color: #fff; overflow: hidden; }
+.cs-feat__viewport { margin-top: 60rem; }
+/* Same card spacing as the homepage strip (.strip__track). */
+.cs-feat__track { display: flex; gap: 14.65rem; width: max-content; will-change: transform; }
+.cs-feat__item { display: block; width: 240rem; flex: none; }
+.cs-feat__img { display: block; height: 300rem; overflow: hidden; background: #2a2a2a; }
+.cs-feat__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease), filter .6s; }
+.cs-feat__item:hover .cs-feat__img img { transform: scale(1.06); }
+.cs-feat__track:hover .cs-feat__item:not(:hover) .cs-feat__img img { filter: brightness(.55); }
+/* Captions sit flush with the image edge, as on the homepage strip, now that cards have gaps. */
+.cs-feat__meta { display: block; padding: 12rem 0 0; }
+.cs-feat__row { display: flex; justify-content: space-between; align-items: center; gap: 8rem; }
+.cs-feat__name { font-size: 14rem; font-weight: 500; line-height: 1.2; }
+.cs-feat__cat { color: #9a9a9a; }
+.cs-feat__result { display: block; margin-top: 6rem; font-size: 14rem; line-height: 1.2; color: #f1f1f1; opacity: .7; }
+.cs-feat__copy { width: 400rem; margin: 60rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 20rem; text-align: center; font-size: 14rem; line-height: 1.2; }
+
+/* ---------- Drop filter ---------- */
+.cs-filter { position: relative; display: inline-flex; gap: 4rem; padding: 4rem; border-radius: 30rem; background: #fff; }
+.cs-filter__btn {
+  position: relative; z-index: 1; width: 76rem; height: 32rem; border-radius: 35rem; color: var(--ink);
+  font-size: 10rem; font-weight: 600; text-transform: uppercase; line-height: normal; transition: color .35s var(--ease), background .35s;
+}
+.cs-filter__btn:not(.is-active):hover { background: #f2f0ff; }
+.cs-filter__btn.is-active { color: #fff; }
+.cs-filter__ind {
+  position: absolute; left: 4rem; top: 4rem; width: 76rem; height: 32rem; border-radius: 35rem; background: var(--purple);
+  transform: translateX(calc(var(--i) * 80rem)); transition: transform .55s var(--ease);
+}
+/* Same filter, floating at the bottom while the four category sections are on screen. */
+.cs-floatwrap {
+  position: fixed; left: 50%; bottom: 24px; z-index: 40; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  transition: opacity .4s, transform .5s var(--ease);
+}
+.cs-floatwrap.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.cs-filter--float { background: rgba(255, 255, 255, .7); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 10rem 30rem rgba(0, 0, 0, .18); }
+
+/* ---------- Tours (mirrors homepage Section 3A) ---------- */
+.cs-tours { padding: 60rem 0 60rem; background: var(--blue); color: var(--ink); }
+.cs-tours__head { display: flex; flex-direction: column; align-items: center; gap: 10rem; text-align: center; font-size: 14rem; line-height: 1.2; }
+.cs-story { position: relative; width: 1320rem; height: 429rem; margin: 78rem auto 0; }
+.cs-story__left { position: absolute; left: 0; top: 0; width: 524rem; }
+.cs-story__left .cs-h36 { width: 420rem; }
+.cs-story__left .cs-body { width: 373rem; margin-top: 10rem; }
+.cs-story__divider { position: absolute; left: 540rem; top: 0; width: 1px; height: 429rem; background: var(--ink); }
+.cs-story__img { position: absolute; left: 557rem; top: 0; width: 429rem; height: 429rem; overflow: hidden; background: #9cc7ee; }
+.cs-story__img img, .cs-feature__img img { width: 100%; height: 100%; object-fit: cover; }
+.cs-story__right { position: absolute; left: 1002rem; top: 0; width: 318rem; height: 429rem; display: flex; flex-direction: column; justify-content: space-between; }
+.cs-story__right .cs-h36 { margin-top: 10rem; }
+.cs-points { display: grid; grid-template-columns: repeat(4, 100rem); gap: 16rem; margin: 24rem 0 24rem; }
+.cs-points li { padding-top: 8rem; border-top: 1px solid var(--ink); font-size: 14rem; line-height: 1.2; }
+
+/* ---------- Card grid (Case Card component) ---------- */
+.cs-grid { display: grid; grid-template-columns: repeat(4, 318rem); gap: 16rem; justify-content: center; margin-top: 50rem; }
+.cs-card { display: block; color: inherit; }
+.cs-card__img { display: block; width: 318rem; height: 318rem; overflow: hidden; background: rgba(0, 0, 0, .08); }
+.cs-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.cs-card:hover .cs-card__img img { transform: scale(1.05); }
+.cs-card__name { display: block; margin-top: 10rem; font-size: 24rem; font-weight: 500; line-height: 1; text-transform: uppercase; }
+.cs-card__row { display: flex; justify-content: space-between; gap: 16rem; margin-top: 10rem; padding-bottom: 6rem; font-size: 14rem; line-height: 1.2; }
+.cs-card__row span:last-child:not(:first-child) { flex: none; }
+.cs-card__rule { display: block; height: 1px; background: currentColor; opacity: .25; transform-origin: left; transition: opacity .4s, transform .7s var(--ease); }
+.cs-card:hover .cs-card__rule { opacity: 1; }
+
+/* ---------- Merch (white) ---------- */
+.cs-merch { padding: 70rem 60rem 70rem; background: #fff; color: var(--ink); }
+.cs-merch__title { width: 652rem; margin: 0 auto; color: #000; }
+.cs-merch .cs-grid { margin-top: 50rem; }
+.cs-merch__quote { margin-top: 20rem; }
+
+/* ---------- Music (dark, pinned horizontal rail like homepage Section 9) ---------- */
+.cs-music { position: relative; background: var(--ink); color: #fff; }
+.cs-music__pin { position: relative; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--ink); }
+.cs-music__head { position: absolute; left: 0; right: 0; top: 76rem; display: flex; flex-direction: column; align-items: center; gap: 16rem; }
+.cs-music__track { position: absolute; left: 60rem; top: 250rem; display: flex; gap: 76rem; width: max-content; padding-right: 60rem; will-change: transform; }
+.cs-mcard { display: flex; gap: 16rem; flex: none; }
+.cs-mcard__img { display: block; width: 429rem; height: 429rem; overflow: hidden; background: #2a2a2a; }
+.cs-mcard__img img { width: 100%; height: 100%; object-fit: cover; }
+.cs-mcard__copy { width: 318rem; height: 429rem; display: flex; flex-direction: column; justify-content: space-between; }
+.cs-stat__value { font-size: 64rem; font-weight: 600; line-height: .8; color: var(--purple); font-variant-numeric: tabular-nums; }
+.cs-stat__label { margin-top: 14rem; font-size: 13.25rem; line-height: 1; text-transform: uppercase; }
+.cs-mcard__foot { display: flex; flex-direction: column; align-items: flex-start; gap: 12rem; }
+.cs-mcard__foot .cs-who { margin-top: -4rem; }
+.cs-mcard__name { font-size: 24rem; font-weight: 500; line-height: 1; text-transform: uppercase; }
+
+/* ---------- Events (light blue) ---------- */
+.cs-events { padding: 106rem 60rem 110rem; background: var(--blue); color: var(--ink); }
+.cs-events__head { display: flex; flex-direction: column; align-items: center; gap: 16rem; }
+.cs-feature { position: relative; display: flex; width: 1320rem; height: 429rem; margin: 60rem auto 0; }
+.cs-feature__img { display: block; width: 652rem; height: 429rem; flex: none; overflow: hidden; background: #9cc7ee; }
+.cs-feature .cs-story__divider { position: static; margin-left: 16rem; flex: none; }
+.cs-feature__copy { flex: 1; padding-left: 76rem; display: flex; flex-direction: column; justify-content: space-between; }
+.cs-feature__copy .cs-h36 { width: 420rem; margin-top: 10rem; }
+.cs-feature__quote { width: 500rem; display: flex; flex-direction: column; gap: 16rem; }
+.cs-avatar { width: 48rem; height: 48rem; border-radius: 50%; object-fit: cover; }
+.cs-events .cs-grid { margin-top: 60rem; }
+.cs-events .cs-center { margin-top: 60rem; }
+
+/* ---------- CTA ---------- */
+.cs-cta { padding: 106rem 60rem 110rem; background: var(--ink); color: #fff; }
+.cs-cta__copy { width: 430rem; margin: 80rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 20rem; text-align: center; font-size: 14rem; line-height: 1.2; }
+
+/* ---------- Mobile: stacked, no pin ---------- */
+@media (max-width: 767px) {
+  .cs-hero__copy { width: 340rem; }
+  .cs-feat { padding: 70rem 0; }
+  .cs-feat__item { width: 200rem; }
+  .cs-feat__img { height: 250rem; }
+  .cs-feat__copy { width: 330rem; }
+  .cs-tours, .cs-merch, .cs-events, .cs-cta { padding: 60rem 20rem; }
+  .cs-story, .cs-feature { width: auto; height: auto; display: flex; flex-direction: column; gap: 24rem; }
+  .cs-story__left, .cs-story__right, .cs-story__img, .cs-story__divider { position: relative; left: auto; width: auto; height: auto; }
+  .cs-story__divider, .cs-feature .cs-story__divider { display: none; }
+  .cs-story__img, .cs-feature__img { width: 350rem; height: 350rem; }
+  .cs-story__left .cs-h36, .cs-story__left .cs-body, .cs-feature__copy .cs-h36, .cs-feature__quote { width: auto; }
+  .cs-story__right { gap: 24rem; }
+  .cs-points { grid-template-columns: repeat(2, 1fr); }
+  .cs-merch__title { width: auto; }
+  .cs-grid { grid-template-columns: 1fr; }
+  .cs-card__img { width: 350rem; height: 350rem; }
+  .cs-feature__copy { padding-left: 0; gap: 24rem; }
+  .cs-music__pin { height: auto; display: block; padding: 70rem 0; }
+  .cs-music .stage { height: auto; }
+  .cs-music__head, .cs-music__track { position: relative; left: auto; top: auto; }
+  .cs-music__track { margin-top: 36rem; padding: 0 20rem; width: auto; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .cs-mcard { flex-direction: column; width: 300rem; scroll-snap-align: start; }
+  .cs-mcard__img { width: 300rem; height: 300rem; }
+  .cs-mcard__copy { width: auto; height: auto; gap: 20rem; }
+  .cs-cta__copy { width: auto; }
+  .cs-filter__btn { width: 70rem; }
+  .cs-filter__ind { width: 70rem; transform: translateX(calc(var(--i) * 74rem)); }
+}

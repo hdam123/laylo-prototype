@@ -1,0 +1,606 @@
+/* Laylo homepage prototype.
+   Desktop: 1rem == 1 Figma px on the 1440 × 800 frame, scaled to fit the viewport
+   (width-limited, or height-limited on short screens so pinned frames always fit). */
+
+@font-face {
+  font-family: "Die";
+  src: url("./fonts/TestDieGroteskVF-Roman.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: block;
+}
+@font-face { font-family: "Saans"; src: url("./fonts/Saans-TRIAL-Regular.otf") format("opentype"); font-weight: 400; font-display: block; }
+@font-face { font-family: "Saans"; src: url("./fonts/Saans-TRIAL-SemiBold.otf") format("opentype"); font-weight: 600; font-display: block; }
+/* Neue Haas Grotesk: only for the iMessage UI on the hero phone screens (Figma uses it there). */
+@font-face { font-family: "NHG"; src: url("./fonts/NHaasGroteskTXPro-55Rg.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "NHG"; src: url("./fonts/NHaasGroteskTXPro-65Md.ttf") format("truetype"); font-weight: 500; }
+
+:root {
+  --ink: #1f1f1f;
+  --purple: #675dff;
+  --blue: #bcdfff;
+  --chip: #e7e7e7;
+  --ease: cubic-bezier(.2, .7, .1, 1);
+}
+
+html {
+  font-size: min(calc(100vw / 1440), calc(100vh / 800));
+  -webkit-text-size-adjust: 100%;
+}
+@supports (height: 100svh) { html { font-size: min(calc(100vw / 1440), calc(100svh / 800)); } }
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--ink);
+  font-family: "Die", "Helvetica Neue", Arial, sans-serif;
+  font-variation-settings: "opsz" 6;
+  font-size: 14rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+img { display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+p, h1, h2, h3, ul, figure { margin: 0; padding: 0; }
+ul { list-style: none; }
+
+/* Die Grotesk named styles: A/B/C/D are the opsz 6/18/30/42 instances. */
+.fA { font-family: "Die", sans-serif; font-variation-settings: "opsz" 6; }
+.fB { font-family: "Die", sans-serif; font-variation-settings: "opsz" 18; }
+.fC { font-family: "Die", sans-serif; font-variation-settings: "opsz" 30; }
+.fD { font-family: "Die", sans-serif; font-variation-settings: "opsz" 42; }
+.saans { font-family: "Saans", "Helvetica Neue", sans-serif; font-variation-settings: normal; }
+
+.h-xl { font-size: 48rem; font-weight: 500; line-height: 0.9; text-transform: uppercase; text-align: center; letter-spacing: 0; }
+.mask { display: block; overflow: hidden; padding-bottom: 0.04em; margin-bottom: -0.04em; }
+.mask > span { display: block; }
+
+/* A 1440 × 800 design frame, centred in its (pinned) viewport. */
+.stage { position: relative; width: 1440rem; height: 800rem; margin: 0 auto; }
+
+/* ---------- Buttons ---------- */
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 8rem 12rem; border-radius: 20rem; background: var(--chip); color: #000;
+  font-size: 12rem; line-height: 1.1; font-weight: 500; text-transform: capitalize; white-space: nowrap;
+  transition: background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+}
+.pill:hover { background: #fff; transform: translateY(-1rem); }
+.pill--grey:hover { background: var(--purple); color: #fff; }
+.pill--purple { background: var(--purple); color: #fff; }
+.pill--purple:hover { background: #5246f0; }
+.outline-pill {
+  display: inline-flex; padding: 10rem 20rem; border: 1.13rem solid currentColor; border-radius: 35rem;
+  font-size: 10rem; font-weight: 600; text-transform: uppercase; line-height: normal; white-space: nowrap;
+  transition: background .3s var(--ease), color .3s var(--ease);
+}
+
+/* ---------- Nav ---------- */
+.navrow { position: relative; height: 73rem; color: #fff; }
+.navrow__links { position: absolute; left: 60rem; top: 30rem; display: flex; gap: 20rem; font-size: 12rem; font-weight: 500; line-height: 1.1; }
+.navrow__links a { position: relative; }
+.navrow__links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3rem; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease);
+}
+.navrow__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.navrow__logo { position: absolute; left: 50%; top: 25rem; transform: translateX(-50%); }
+.navrow__logo img { width: 86.34rem; height: 23rem; }
+.navrow__actions { position: absolute; right: 60rem; top: 22rem; display: flex; align-items: center; gap: 10rem; font-size: 12rem; font-weight: 500; }
+.navrow__login { line-height: 1.1; opacity: 1; transition: opacity .3s; }
+.navrow__login:hover { opacity: .65; }
+
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50; width: 100%;
+  transition: transform .5s var(--ease), background-color .4s, backdrop-filter .4s;
+}
+.nav > .navrow { max-width: 1440rem; margin: 0 auto; }
+.nav.is-solid {
+  background: rgba(255, 255, 255, .08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+}
+/* Over light sections: dark text and logo on the same frosted glass. */
+.nav .navrow, .nav .navrow__logo img { transition: color .4s var(--ease), filter .4s var(--ease); }
+.nav.on-light .navrow { color: var(--ink); }
+.nav.on-light .navrow__logo img { filter: brightness(0.12); }
+.nav.on-light.is-solid { background: rgba(255, 255, 255, .35); }
+.nav.is-hidden { transform: translateY(-100%); }
+/* Version A (nav.js, keepLogo): when hiding, only the links, buttons and glass go; the wordmark stays. */
+.nav.keep-logo.is-hidden { transform: none; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; pointer-events: none; }
+.nav.keep-logo .navrow__links, .nav.keep-logo .navrow__actions { transition: opacity .4s, transform .5s var(--ease); }
+.nav.keep-logo.is-hidden .navrow__links, .nav.keep-logo.is-hidden .navrow__actions { opacity: 0; transform: translateY(-12rem); }
+.nav.keep-logo.is-hidden .navrow__logo { pointer-events: auto; }
+/* Small frosted chip behind the lone wordmark so it reads over photos and icons. */
+.nav.keep-logo .navrow__logo::before {
+  content: ""; position: absolute; inset: -8rem -16rem; z-index: -1; border-radius: 30rem; opacity: 0;
+  background: rgba(20, 20, 20, .28); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4);
+  transition: opacity .4s;
+}
+.nav.keep-logo.on-light .navrow__logo::before { background: rgba(255, 255, 255, .6); }
+.nav.keep-logo.is-hidden .navrow__logo::before { opacity: 1; }
+
+/* ---------- Hero (Landing Scroll) ---------- */
+.hero { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); color: #fff; }
+/* Right half: the 720 × 800 Figma phone panel, scaled by --p to cover the half (hero.js). */
+.hero__right {
+  --p: max(calc(50vw / 720), calc(100vh / 800));
+  position: absolute; left: 50%; top: 0; width: 50%; height: 100%; overflow: hidden; background: #d9d9d9;
+}
+.hero__stage { position: absolute; left: 50%; top: 50%; width: calc(720 * var(--p)); height: calc(800 * var(--p)); translate: -50% -50%; }
+.hero__stage > * { position: absolute; }
+.hero__phone { overflow: hidden; }
+.hero__phone img { position: absolute; left: 0; top: 0.04%; width: 100%; height: 99.93%; object-fit: cover; }
+.hero__screen { overflow: hidden; isolation: isolate; background: #fff; will-change: clip-path; }
+.hero__screen > * { position: absolute; }
+.hero__base { left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero__white { background: #fff; }
+.hero__tint { mix-blend-mode: multiply; }
+.hero__shade { inset: 0; background: rgba(0, 0, 0, .15); pointer-events: none; }
+.nhg { font-family: "NHG", "Helvetica Neue", Arial, sans-serif; font-weight: 400; font-variation-settings: normal; color: #000; line-height: normal; }
+.nhg-md { font-weight: 500; }
+.hero__name { translate: -50% 0; white-space: nowrap; background: rgba(233, 233, 234, .4); border: 0 solid rgba(0, 0, 0, .4); }
+.hero__avatar { border-radius: 50%; object-fit: cover; }
+.hero__bubble { display: flex; align-items: center; }
+.hero__bubble p, .hero__card p { margin: 0; width: 100%; }
+.hero__card { display: flex; flex-direction: column; align-items: stretch; justify-content: center; overflow: hidden; }
+.hero__cardImg { position: relative; flex: none; width: 100%; overflow: hidden; }
+.hero__cardImg img { width: 100%; height: 100%; object-fit: cover; }
+.hero__col { display: flex; flex-direction: column; }
+.hero__col > * { position: relative; left: auto !important; top: auto !important; flex: none; }
+.hero__left { position: absolute; left: 0; top: 0; width: 50%; height: 100%; overflow: hidden; }
+.hero__img { position: absolute; inset: 0; overflow: hidden; will-change: clip-path; }
+/* Legibility: the same 15% dark layer Figma puts on the phone frames, on every left photo too. */
+.hero__img::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, .15); pointer-events: none; }
+.hero__img img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+.hero__copy {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 18rem;
+}
+.hero__title {
+  font-size: 48rem; font-weight: 500; line-height: 0.9; text-align: center; white-space: nowrap;
+}
+.hero__line { display: block; overflow: hidden; padding-bottom: 0.05em; margin-bottom: -0.05em; }
+.hero__lineInner { display: block; }
+.hero__slot { position: relative; display: inline-block; height: 0.9em; vertical-align: top; overflow: hidden; }
+.hero__word { position: absolute; left: 50%; top: 0; white-space: nowrap; }
+.hero__ctas { display: flex; gap: 10rem; font-weight: 500; }
+
+/* Version A2 (hero-a2.js): auto-advancing hero, three progress bars at the bottom. */
+.heroA2 .hero__left, .heroA2 .hero__stage { isolation: isolate; }
+.heroA2 .hero__shade { z-index: 3; }
+.heroA2__bars { position: absolute; left: 50%; bottom: 32rem; translate: -50% 0; z-index: 3; display: flex; gap: 6rem; }
+.heroA2__bar { width: 44rem; height: 2rem; border-radius: 2rem; background: rgba(255, 255, 255, .35); overflow: hidden; }
+.heroA2__barFill { display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+
+/* ---------- Strip (Section 7) ---------- */
+.strip { position: relative; height: 800rem; background: var(--ink); color: #fff; overflow: hidden; }
+.strip__title { position: absolute; left: 0; right: 0; top: 106.76rem; color: #fff; }
+.strip__viewport { position: absolute; left: 0; right: 0; top: 282rem; height: 300rem; }
+.strip__track { display: flex; gap: 14.65rem; width: max-content; will-change: transform; }
+.strip__item { width: 235rem; flex: none; cursor: pointer; }
+.strip__media { width: 235rem; height: 235rem; overflow: hidden; background: #2a2a2a; }
+.strip__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease), filter .6s; }
+.strip__item:hover .strip__media img { transform: scale(1.06); }
+.strip__track:hover .strip__item:not(:hover) .strip__media img { filter: brightness(.55); }
+.strip__cap { position: relative; display: block; height: 64rem; padding-top: 10rem; }
+.strip__name {
+  display: block; font-size: 32rem; font-weight: 500; line-height: 0.8; height: 26rem; padding-top: 1rem;
+  transform: translateY(105%); transition: transform .6s var(--ease);
+}
+.strip__meta {
+  display: flex; justify-content: space-between; margin-top: 4rem; font-size: 14rem; line-height: 1.18;
+  opacity: 0; transform: translateY(6rem); transition: opacity .4s, transform .6s var(--ease);
+}
+.strip__rule {
+  position: absolute; left: 0; right: 0; top: 62rem; height: 1px; background: rgba(255, 255, 255, .55);
+  transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease);
+}
+.strip__item:hover .strip__name { transform: none; }
+.strip__item:hover .strip__meta { opacity: 1; transform: none; transition-delay: .08s; }
+.strip__item:hover .strip__rule { transform: scaleX(1); transition-delay: .12s; }
+.strip__copy { position: absolute; left: 50%; top: 651rem; width: 430rem; translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 14rem; }
+.strip__copy p { font-size: 14rem; line-height: 1.18; text-align: center; }
+.strip .outline-pill:hover { background: #fff; color: var(--ink); }
+
+/* Version A (strip.js, feed): captions always on, rank + live growth over each image. */
+.strip--feed .strip__name, .strip--feed .strip__meta { transform: none; opacity: 1; }
+.strip--feed .strip__rule { transform: none; }
+.strip__media { position: relative; }
+.strip__top {
+  position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; padding: 12rem 14rem 28rem;
+  font-size: 14rem; line-height: 1.18; color: #fff; background: linear-gradient(rgba(0, 0, 0, .45), transparent); pointer-events: none;
+}
+.strip__growth { display: inline-flex; align-items: center; gap: 2rem; transition: transform .3s var(--ease); }
+.strip__arrow { width: 1.15em; height: 1.15em; fill: currentColor; flex: none; }
+.strip__growth.is-up { transform: scale(1.15); }
+
+/* ---------- Platform (Section 2A–2C) ---------- */
+.pf { position: relative; background: #fff; }
+.pf__pin { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: #fff; display: flex; align-items: center; }
+.pf__stage { pointer-events: none; z-index: 2; }
+.pf__head { position: absolute; left: 0; right: 0; top: 60rem; text-align: center; }
+.pf__head .h-xl { color: #000; }
+.pf__sub { position: absolute; left: 50%; top: 106rem; width: 430rem; transform: translateX(-50%); font-size: 14rem; line-height: 1.18; }
+.pf__labels {
+  position: absolute; left: -50vw; right: -50vw; top: 220rem; height: 24rem;
+  /* Figma's left-edge white fade (Rectangle 2147237524): hidden until x=144, clear from x=232. */
+  -webkit-mask-image: linear-gradient(to right, transparent calc(50vw + 144rem), #000 calc(50vw + 232rem));
+  mask-image: linear-gradient(to right, transparent calc(50vw + 144rem), #000 calc(50vw + 232rem));
+}
+.pf__track {
+  position: absolute; left: 50vw; top: 0; display: flex; align-items: center; gap: 10rem; width: max-content;
+  font-size: 24rem; font-weight: 500; line-height: 0.9; text-transform: uppercase; white-space: nowrap; color: #000;
+}
+.pf__conn { display: block; width: 40rem; height: 1px; background: linear-gradient(to left, rgba(0, 0, 0, .2), rgba(102, 102, 102, .04)); }
+/* Diagram window: starts under the step label and fades content out as it passes upward. */
+.pf__window {
+  position: absolute; left: 0; right: 0; bottom: 0; top: calc(50% - 400rem + 250rem); overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 46rem);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 46rem);
+}
+.pf__canvas { position: absolute; left: 50%; top: -250rem; width: 1440rem; height: 2000rem; margin-left: -720rem; will-change: transform; }
+.pf__canvas > * { position: absolute; }
+.pf__icon { width: 95rem; height: 95rem; z-index: 2; }
+.pf__icon.is-round { border-radius: 24rem; }
+.pf__icon.is-light { box-sizing: border-box; border: 1.5rem solid #e4e4e4; background: #fff; object-fit: contain; }
+.pf__elbow { z-index: 1; }
+.pf__vline { width: 1px; margin-left: -0.5px; background: linear-gradient(to bottom, #000, rgba(102, 102, 102, .2)); z-index: 0; }
+.pf-draw { will-change: clip-path; }
+.pf__pill {
+  left: 720rem; top: 512rem; transform-origin: center; translate: -50% 0; z-index: 3;
+  padding: 10rem 20rem; border: 1.13rem solid #000; border-radius: 35rem; background: #fff;
+  font-size: 10rem; font-weight: 600; line-height: normal; text-transform: uppercase; white-space: nowrap; color: #000;
+}
+.pf__card { left: 566rem; top: 559rem; width: 308rem; height: 308rem; padding: 29rem 20rem 0; border-radius: 20rem; background: #f5f5f5; z-index: 2; color: #000; }
+.pf__cardName { font-size: 24rem; font-weight: 500; line-height: 0.9; text-transform: uppercase; }
+.pf__cardSub { margin-top: 4.4rem; font-size: 14rem; font-weight: 500; line-height: 1.18; }
+.pf__rows { position: absolute; left: 20rem; right: 20rem; top: 143rem; font-size: 14rem; font-weight: 500; line-height: 1.18; }
+.pf__row { --rule: 1; position: relative; display: flex; height: 31rem; padding-top: 13rem; }
+.pf__row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(0, 0, 0, .45); transform: scaleX(var(--rule)); transform-origin: left; }
+.pf__row span:first-child { width: 142rem; flex: none; }
+/* Version A: richer Fan CRM card, same height so nothing below moves. */
+.pf__card--rich {
+  left: 510rem; width: 420rem; padding: 20rem 22rem; background: #fff; border: 1rem solid #e8e8e8;
+  box-shadow: 0 24rem 60rem rgba(0, 0, 0, .12), 0 4rem 14rem rgba(0, 0, 0, .06);
+  display: flex; flex-direction: column; gap: 12rem;
+}
+.pf__cardHead { display: flex; align-items: center; gap: 12rem; }
+.pf__avatar {
+  flex: none; width: 44rem; height: 44rem; border-radius: 50%; object-fit: cover; background: #e9e9e9;
+}
+.pf__card--rich .pf__cardSub { margin-top: 3rem; font-size: 12rem; color: #6b6b6b; }
+.pf__score { margin-left: auto; text-align: right; line-height: 1; }
+.pf__score b { display: block; font-size: 28rem; font-weight: 600; color: var(--purple); }
+.pf__score span { font-size: 9rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #6b6b6b; }
+.pf__tags { display: flex; gap: 6rem; }
+.pf__tag { padding: 4rem 9rem; border-radius: 20rem; background: #efeeff; color: #4a40e0; font-size: 10rem; font-weight: 600; }
+.pf__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6rem; }
+.pf__stat { padding: 8rem 10rem; border-radius: 4rem; background: #f5f5f5; line-height: 1.1; }
+.pf__stat b { display: block; font-size: 18rem; font-weight: 600; }
+.pf__stat span { font-size: 10rem; color: #6b6b6b; }
+.pf__fields { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16rem; }
+.pf__fields .pf__row { height: auto; flex-direction: column; padding: 6rem 0 5rem; font-size: 12rem; font-weight: 500; line-height: 1.2; }
+.pf__fields .pf__row::before { background: rgba(0, 0, 0, .14); }
+.pf__fields .pf__row span:first-child { width: auto; font-size: 9rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #8a8a8a; }
+.pf__phone { left: 437rem; top: 896rem; width: 566rem; height: 566rem; z-index: 2; }
+.pf__phone > * { position: absolute; }
+/* Plain phone frame: black bezel + thin metal edge, drawn around the screen with shadows. */
+.pf__screen {
+  left: 181.12rem; top: 57.03rem; width: 203.76rem; height: 439.59rem; border-radius: 26.41rem; overflow: hidden; background: #fff;
+  box-shadow: 0 0 0 6rem #111, 0 0 0 7.5rem #3a3a3c, 0 30rem 60rem rgba(0, 0, 0, .16);
+}
+.pf__screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+/* Version A: channel screens beside the SMS phone (channels.js). Same size and bezel as .pf__screen. */
+.pf__side { width: 203.76rem; z-index: 2; }
+/* All five phones a touch smaller, each scaled from its own top centre. */
+.pf__side { scale: .9; transform-origin: 50% 0; }
+.pf__phone--sm ~ .pf__chLabel--sms { margin-top: calc((439.59rem + 22rem) * .9); font-size: 10.8rem; }
+.pf__phone--sm { scale: .9; transform-origin: 283rem 57.03rem; }
+.pf__sideScreen {
+  position: relative; height: 439.59rem; border-radius: 26.41rem; overflow: hidden; background: #fff;
+  box-shadow: 0 0 0 6rem #111, 0 0 0 7.5rem #3a3a3c, 0 30rem 60rem rgba(0, 0, 0, .16);
+}
+.pf__chLabel {
+  display: block; margin-top: 22rem; text-align: center; font-size: 12rem; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink);
+}
+.pf__chLabel--sms { width: 203.76rem; margin-top: calc(439.59rem + 22rem); z-index: 2; }
+.ch { position: absolute; inset: 0; display: flex; flex-direction: column; font-size: 8rem; line-height: 1.3; color: #000; }
+.ch small { font-size: 6.5rem; color: #8a8a8e; }
+.ch b { font-weight: 600; }
+.ch__status { display: flex; justify-content: space-between; align-items: center; padding: 11rem 18rem 6rem 22rem; font-size: 8.5rem; font-weight: 600; }
+.ch__statusIcons { display: flex; gap: 3rem; align-items: center; }
+.ch__statusIcons i { width: 9rem; height: 6rem; border-radius: 1rem; background: currentColor; }
+.ch__statusIcons b { width: 15rem; height: 7rem; border-radius: 2rem; border: 1rem solid currentColor; }
+.ch__av { width: 22rem; height: 22rem; border-radius: 50%; object-fit: cover; flex: none; }
+.ch__back { font-size: 14rem; line-height: 1; color: #007aff; }
+.ch__tick { width: 8rem; height: 8rem; vertical-align: -1rem; }
+.ch__thread { flex: 1; display: flex; flex-direction: column; gap: 5rem; padding: 8rem 9rem; overflow: hidden; }
+.ch__msg { align-self: flex-start; max-width: 80%; padding: 6rem 9rem; border-radius: 13rem; background: #efefef; }
+.ch__msg.is-me { align-self: flex-end; }
+.ch__input { margin: 0 9rem 14rem; padding: 6rem 10rem; border-radius: 14rem; border: 1rem solid #dcdcdc; color: #9a9a9a; }
+.ch__day { align-self: center; }
+/* Email (iOS Mail) */
+.ch__mailBar { display: flex; justify-content: space-between; padding: 2rem 12rem 6rem; color: #007aff; font-size: 9rem; }
+.ch__mailHead { display: flex; gap: 7rem; align-items: center; padding: 6rem 12rem; border-top: 1rem solid #eee; }
+.ch__mailHead small { display: block; }
+.ch__mailSubject { padding: 2rem 12rem 8rem; font-size: 11rem; font-weight: 600; line-height: 1.2; }
+.ch__mailBody { flex: 1; margin: 0 10rem; padding: 0 0 10rem; border-radius: 10rem; background: #f6f5f3; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6rem; overflow: hidden; }
+.ch__mailBody img { width: 100%; height: 92rem; object-fit: cover; }
+.ch__mailBody p { margin: 0 12rem; }
+.ch__mailH { font-size: 12rem; font-weight: 600; }
+.ch__code { padding: 4rem 10rem; border: 1rem dashed #b9b9b9; border-radius: 6rem; font: 600 9rem/1.3 ui-monospace, Menlo, monospace; letter-spacing: .08em; }
+.ch__btn { padding: 6rem 14rem; border-radius: 14rem; background: var(--purple); color: #fff; font-weight: 600; }
+.ch__foot { margin-top: auto; }
+/* Instagram DM */
+.ch__igHead, .ch__rcsHead, .ch__waHead { display: flex; gap: 7rem; align-items: center; padding: 4rem 10rem 8rem; border-bottom: 1rem solid #efefef; }
+.ch__igHead small, .ch__rcsHead small, .ch__waHead small { display: block; }
+.ch__igHead .ch__back { color: #000; }
+.ch__story { align-self: flex-end; text-align: right; }
+.ch__story img { display: block; width: 58rem; height: 86rem; margin-left: auto; border-radius: 9rem; object-fit: cover; }
+.ch__igMe { background: linear-gradient(135deg, #8a3ab9, #4c68d7); color: #fff; }
+.ch__link { align-self: flex-start; width: 78%; border-radius: 13rem; overflow: hidden; background: #efefef; }
+.ch__link img { display: block; width: 100%; height: 58rem; object-fit: cover; }
+.ch__link div { padding: 5rem 8rem 6rem; }
+.ch__link small { display: block; }
+/* RCS (Google Messages) */
+.ch--rcs { font-family: Roboto, "Helvetica Neue", Arial, sans-serif; }
+.ch__rcsHead .ch__back { color: #1f1f1f; }
+.ch__rich { align-self: flex-start; width: 86%; border-radius: 14rem; overflow: hidden; background: #f1f3f4; display: flex; flex-direction: column; }
+.ch__rich img { width: 100%; height: 96rem; object-fit: cover; }
+.ch__richBody { padding: 7rem 9rem; }
+.ch__richBody p { margin: 2rem 0 0; color: #444; }
+.ch__action { padding: 6rem 0; border-top: 1rem solid #dadce0; text-align: center; color: #0b57d0; font-weight: 600; }
+.ch__chips { display: flex; gap: 5rem; margin-top: auto; }
+.ch__chips span { padding: 4rem 9rem; border-radius: 12rem; border: 1rem solid #c4c7c5; color: #0b57d0; font-weight: 600; }
+/* WhatsApp */
+.ch__waHead { background: #f6f6f6; }
+.ch__waTick { display: inline-grid; place-items: center; width: 8rem; height: 8rem; border-radius: 50%; background: #25d366; color: #fff; font-size: 5.5rem; }
+.ch__waBg { background: #efeae2; }
+.ch__waDay { padding: 2rem 7rem; border-radius: 6rem; background: #fff; }
+.ch__waMsg { position: relative; align-self: flex-start; width: 80%; padding: 3rem 3rem 5rem; border-radius: 8rem; background: #fff; box-shadow: 0 1rem 1rem rgba(0, 0, 0, .08); }
+.ch__waMsg img { display: block; width: 100%; height: 82rem; border-radius: 6rem; object-fit: cover; }
+.ch__waMsg p { margin: 4rem 4rem 0; }
+.ch__waMsg small { display: block; text-align: right; margin: 1rem 4rem 0; }
+.ch__waBtn { display: block; margin: 4rem -3rem -5rem; padding: 6rem 0; border-top: 1rem solid #eee; text-align: center; color: #008069; font-weight: 600; }
+.ch__waMsg.is-me { align-self: flex-end; width: auto; background: #d9fdd3; }
+.ch--wa .ch__input { margin-top: 0; padding-top: 6rem; background: #fff; }
+.pf__panel {
+  left: 394rem; top: 1838rem; width: 652rem; height: 123rem; border-radius: 20rem; background: #f3f3f3; z-index: 2;
+  padding: 24rem 10rem 0 20rem; font-size: 14rem; font-weight: 500; line-height: 1.18; color: #000;
+}
+.pf__bar { display: flex; align-items: flex-start; height: 30.5rem; }
+.pf__barLabel { width: 72rem; flex: none; }
+.pf__barTrack { position: relative; width: 468rem; height: 18rem; background: #e1e1e1; flex: none; }
+.pf__barFill { position: absolute; left: 0; top: 0; height: 100%; background: var(--purple); transform-origin: left; }
+.pf__barValue { flex: 1; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Version A: one revenue counter in place of the bars, same panel footprint. */
+.pf__panel--rev { padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; text-align: center; }
+.pf__revLabel { font-size: 11rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6b6b6b; }
+.pf__revValue { font-size: 48rem; font-weight: 500; line-height: 1; color: var(--purple); font-variant-numeric: tabular-nums; }
+.pf__revValue .pf__barValue { flex: none; }
+.pf__revSplit { font-size: 12rem; color: #6b6b6b; white-space: pre; }
+
+/* ---------- Agents (Section 3A–3C) ---------- */
+.ag { position: relative; background: var(--blue); }
+.ag__pin { position: relative; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--blue); }
+.ag__title { position: absolute; left: 0; right: 0; top: 60.38rem; color: var(--ink); }
+.ag__sub { position: absolute; left: 50%; top: 156.38rem; width: 430rem; transform: translateX(-50%); text-align: center; font-size: 14rem; line-height: 1.18; }
+.ag__tabs {
+  position: absolute; left: 501rem; top: 193.38rem; width: 435rem; height: 39rem; padding: 4rem;
+  display: flex; gap: 4rem; border-radius: 30rem; background: rgba(255, 255, 255, .4);
+}
+.ag__tabs::before { content: none; }
+.ag__ind { position: absolute; left: 0; top: 4rem; height: 31rem; width: 104.26rem; border-radius: 35rem; background: var(--purple); z-index: 1; }
+.ag__tab {
+  position: relative; height: 31rem; width: 104.26rem; padding: 0 10rem; border-radius: 35rem; background: #fff; color: var(--ink);
+  font-size: 10rem; font-weight: 600; text-transform: uppercase; line-height: normal; transition: color .35s var(--ease), background .35s;
+}
+.ag__tab:nth-of-type(2) { width: 102rem; } /* PROMOTERS is the widest label */
+.ag__tab span, .ag__tab { z-index: 0; }
+.ag__tab.is-active { background: transparent; color: #fff; z-index: 2; }
+.ag__tab:not(.is-active):hover { background: #f2f0ff; }
+.ag__body { position: absolute; left: 0; top: 311rem; width: 1440rem; height: 429rem; }
+/* Before / During / After as a numbered timeline (Granola-style): hairline rail under each step
+   that fills as you scroll; completed steps stay filled; the active step is full strength. */
+.ag__steps { position: absolute; left: 60rem; top: 0; width: 470rem; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 26rem; }
+.ag__step { position: relative; }
+.ag__stepBtn { display: block; width: 100%; text-align: left; color: var(--ink); opacity: .38; transition: opacity .45s var(--ease); }
+.ag__step.is-active .ag__stepBtn, .ag__stepBtn:hover { opacity: 1; }
+.ag__step.is-done .ag__stepBtn { opacity: .6; }
+.ag__stepHead { display: flex; align-items: center; gap: 10rem; font-size: 10rem; font-weight: 700; line-height: 1; text-transform: uppercase; }
+.ag__stepNum { display: inline-grid; place-items: center; width: 22rem; height: 22rem; border: 1px solid currentColor; border-radius: 50%; font-size: 9rem; }
+.ag__step.is-active .ag__stepNum { background: var(--purple); border-color: var(--purple); color: #fff; }
+.ag__stepText { display: block; margin-top: 12rem; font-size: 20rem; font-weight: 500; line-height: 1.15; }
+.ag__rail { position: relative; display: block; height: 1px; margin-top: 18rem; background: rgba(31, 31, 31, .2); }
+.ag__railFill { position: absolute; left: 0; top: -1px; width: 100%; height: 3px; background: var(--ink); transform: scaleX(0); transform-origin: left; }
+.ag__divider { position: absolute; left: 601rem; top: 0; width: 1px; height: 429rem; background: var(--ink); }
+.ag__img { position: absolute; left: 617rem; top: 0; width: 429rem; height: 429rem; overflow: hidden; background: #9cc7ee; }
+.ag__imgLayer { position: absolute; inset: 0; overflow: hidden; }
+.ag__imgLayer img { position: absolute; max-width: none; transform-origin: 50% 50%; }
+.ag__right { position: absolute; left: 1062rem; top: 0; width: 318rem; height: 429rem; display: flex; flex-direction: column; justify-content: space-between; font-size: 14rem; line-height: 1.2; color: var(--ink); }
+.ag__client { font-size: 10rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+.ag__stat { margin-top: 10rem; font-size: 36rem; font-weight: 500; line-height: 0.95; color: var(--purple); }
+.ag__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8rem 6rem; margin-top: 20rem; }
+/* Outlined pill, same size as the purple CTA beside it (inset ring keeps the heights equal). */
+.ag__caseLink {
+  display: inline-flex; align-items: center; padding: 8rem 12rem; border-radius: 20rem; box-shadow: inset 0 0 0 1rem currentColor;
+  font-size: 12rem; font-weight: 500; line-height: 1.1; white-space: nowrap;
+  transition: background .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+.ag__caseLink:hover { background: var(--ink); color: #fff; box-shadow: inset 0 0 0 1rem var(--ink); transform: translateY(-1rem); }
+.ag__quote { font-size: 14rem; line-height: 1.2; }
+.ag__imgTodo { position: absolute; inset: 0; display: grid; place-content: center; gap: 10rem; text-align: center; background: #1f1f1f; color: #fff; }
+.ag__imgTodo span { font-size: 36rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
+.ag__imgTodo small { font-size: 10rem; font-weight: 700; text-transform: uppercase; opacity: .5; }
+.ag__statSub { margin-top: 10rem; }
+.ag__who { margin-top: 10rem; font-size: 10rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+
+/* ---------- Tools (Section 8) ---------- */
+.tools { position: relative; background: #fff; }
+.tools__pin { position: relative; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; background: #fff; }
+/* The headline frame overlaps the scrolling grid; let clicks and hovers through to the tools. */
+.tools__stage { pointer-events: none; }
+.tools__title { position: absolute; left: 0; right: 0; top: 94rem; color: #000; z-index: 3; }
+/* Scrolling window under the fixed headline: starts at frame y=190, runs to the viewport bottom,
+   faded at both edges so rows rise in and drift out. */
+.tools__window {
+  position: absolute; left: 0; right: 0; bottom: 0; top: calc(50% - 400rem + 190rem); overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 60rem, #000 calc(100% - 140rem), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 60rem, #000 calc(100% - 140rem), transparent 100%);
+}
+.tools__list { position: absolute; left: 50%; top: 85rem; width: 1320rem; margin-left: -660rem; will-change: transform; }
+.tools__group + .tools__group { margin-top: 72rem; }
+/* Group heading: same type as the Before / During / After labels (Die Grotesk B, bold 10px caps). */
+.tools__groupHead {
+  display: flex; align-items: center; gap: 12rem; padding-bottom: 14rem; margin-bottom: 28rem;
+  border-bottom: 1px solid rgba(31, 31, 31, .15);
+  font-size: 10rem; font-weight: 700; line-height: 1; text-transform: uppercase; color: var(--ink);
+}
+.tools__grid { display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 16rem; row-gap: 56rem; }
+.tool { display: flex; flex-direction: column; align-items: flex-start; }
+/* Icon is the SVG used as a mask over a solid fill, so its colour can change on hover. */
+.tool__icon {
+  display: block; width: 36rem; height: 36rem; background-color: #1f1f1f;
+  -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat;
+  transition: transform .5s var(--ease), background-color .3s var(--ease);
+}
+.tool:has(.pill:hover) .tool__icon { background-color: var(--purple); }
+.tool:hover .tool__icon { transform: translateY(-4rem) rotate(-6deg); }
+.tool__name { margin-top: 12rem; font-size: 24rem; font-weight: 500; line-height: 1; color: var(--ink); }
+.tool__body { margin-top: 10rem; margin-bottom: 18rem; font-size: 14rem; line-height: 1.2; color: var(--ink); }
+/* Cards in a row stretch to the same height; auto margin pins every CTA to the bottom edge. */
+.tool .pill { margin-top: auto; }
+
+/* ---------- Testimonials (Section 9) ---------- */
+.tm { position: relative; background: var(--ink); color: #fff; }
+.tm__pin { position: relative; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--ink); }
+.tm__title { position: absolute; left: 50%; top: 115rem; width: 900rem; transform: translateX(-50%); color: #fff; }
+.tm__track { position: absolute; left: -608rem; top: 305rem; display: flex; gap: 16rem; width: max-content; will-change: transform; }
+.tm__card { display: flex; gap: 16rem; width: 652rem; flex: none; }
+.tm__img { position: relative; width: 429rem; height: 429rem; overflow: hidden; flex: none; background: #2a2a2a; }
+.tm__img img { position: absolute; max-width: none; object-fit: cover; transition: transform 1.2s var(--ease); }
+.tm__card:hover .tm__img img { transform: scale(1.05); }
+.tm__text { width: 207rem; height: 429rem; display: flex; flex-direction: column; justify-content: space-between; }
+.tm__stat { font-size: 64rem; font-weight: 600; line-height: 0.8; color: var(--purple); padding-top: 2rem; }
+.tm__label { margin-top: 20rem; font-size: 13.25rem; line-height: 0.8; text-transform: uppercase; }
+.tm__quote { font-size: 14rem; line-height: 1.2; color: #f1f1f1; }
+.tm__who { margin-top: 8rem; font-size: 10rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; color: #f1f1f1; }
+
+/* ---------- Footer ---------- */
+.ft { position: relative; height: 515rem; background: var(--purple); color: #fff; overflow: hidden; }
+.ft__nav { position: relative; max-width: 1440rem; margin: 0 auto; }
+.ft__nav .navrow { margin-top: 8rem; }
+.ft__nav .navrow__links { top: 30rem; }
+.ft__nav .navrow__actions { top: 22rem; }
+.ft__nav .pill:hover { background: #fff; }
+.ft__mark { position: absolute; left: 50%; bottom: 60.37rem; width: 1320rem; height: 351.63rem; transform: translateX(-50%); overflow: hidden; cursor: default; }
+
+/* ---------- Modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; background: rgba(15, 15, 15, .6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.modal__panel { position: relative; width: min(440px, 100%); padding: 36px 32px 28px; border-radius: 20px; background: #fff; color: var(--ink); box-shadow: 0 30px 80px rgba(0, 0, 0, .35); }
+.modal__close { position: absolute; right: 14px; top: 10px; font-size: 26px; line-height: 1; padding: 6px; opacity: .5; }
+.modal__close:hover { opacity: 1; }
+.modal__title { font-size: 30px; font-weight: 500; line-height: .95; text-transform: uppercase; }
+.modal__sub { margin-top: 10px; font-size: 14px; line-height: 1.3; opacity: .75; }
+.modal__fields { display: grid; gap: 12px; margin-top: 22px; }
+.field { display: grid; gap: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+.field input, .field select {
+  font: 500 15px/1.2 "Die", sans-serif; font-variation-settings: "opsz" 6; text-transform: none; letter-spacing: 0;
+  padding: 12px 14px; border: 1px solid #d9d9d9; border-radius: 10px; background: #fafafa; color: var(--ink); outline: none;
+  transition: border-color .2s, background .2s;
+}
+.field input:focus, .field select:focus { border-color: var(--purple); background: #fff; }
+.modal .pill { font-size: 14px; padding: 13px 20px; border-radius: 30px; }
+.modal__submit { width: 100%; margin-top: 20px; }
+.modal__submit[disabled] { opacity: .7; cursor: progress; }
+.modal__fine { margin-top: 12px; font-size: 11px; text-align: center; opacity: .5; }
+.modal__done { display: grid; justify-items: center; gap: 12px; text-align: center; padding: 10px 0; }
+.modal__check { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 50%; background: var(--purple); color: #fff; font-size: 26px; }
+/* Info panel: tool details. */
+.modal__eyebrow { font-size: 10px; font-weight: 700; line-height: 1; text-transform: uppercase; color: var(--ink); }
+.modal__icon {
+  display: block; width: 36px; height: 36px; margin: 16px 0 12px; background-color: var(--purple);
+  -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat;
+}
+.modal__info .modal__title { margin-top: 6px; }
+.modal__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+/* ---------- Mobile (no Figma mobile design: simplified, same choreography where it fits) ---------- */
+@media (max-width: 767px) {
+  html { font-size: calc(100vw / 390); }
+  .h-xl { font-size: 26rem; }
+  .navrow { height: 60rem; }
+  .navrow__links { display: none; }
+  .navrow__logo { left: 20rem; top: 22rem; transform: none; }
+  .navrow__actions { right: 16rem; top: 16rem; }
+  .navrow__login { display: none; }
+
+  .hero__left { width: 100%; height: 58%; }
+  .hero__right { --p: max(calc(100vw / 720), calc(42vh / 800)); left: 0; width: 100%; top: 58%; height: 42%; }
+  .hero__copy { top: 60%; width: 340rem; gap: 20rem; }
+  .hero__title { font-size: 32rem; white-space: normal; }
+
+  .strip { height: 640rem; }
+  .strip__title { top: 70rem; padding: 0 20rem; }
+  .strip__viewport { top: 190rem; }
+  .strip__track { gap: 10rem; }
+  .strip__item, .strip__media { width: 200rem; }
+  .strip__media { height: 200rem; }
+  .strip__item:nth-child(6n + 2) .strip__name, .strip__item:nth-child(6n + 2) .strip__meta { transform: none; opacity: 1; }
+  .strip__item:nth-child(6n + 2) .strip__rule { transform: none; }
+  .strip__copy { top: 490rem; width: 330rem; }
+
+  .stage { width: 390rem; height: 100%; }
+  .pf__head { top: 76rem; padding: 0 12rem; }
+  .pf__sub { top: 82rem; width: 330rem; }
+  .pf__labels {
+    top: 196rem;
+    -webkit-mask-image: linear-gradient(to right, transparent calc(50vw + 4rem), #000 calc(50vw + 40rem));
+    mask-image: linear-gradient(to right, transparent calc(50vw + 4rem), #000 calc(50vw + 40rem));
+  }
+  .pf__track { font-size: 16rem; }
+  /* Diagram keeps its desktop geometry, zoomed to fit. zoom also scales the window's own offset. */
+  .pf__window { zoom: 0.55; top: calc(236rem / 0.55); }
+  .pf__canvas { top: -270rem; }
+
+  .ag__pin, .tools__pin, .tm__pin { height: auto; display: block; padding: 90rem 0 60rem; }
+  .ag__title, .ag__sub, .ag__tabs, .ag__body, .ag__steps, .ag__right, .ag__img, .ag__divider,
+  .tools__title, .tools__list, .tm__title, .tm__track { position: relative; left: auto; top: auto; transform: none; }
+  .ag__sub { width: auto; margin: 12rem 20rem 0; }
+  .ag__tabs { margin: 18rem auto 0; width: 360rem; }
+  .ag__tab { flex: 1; width: auto !important; font-size: 9rem; }
+  .ag__body { width: auto; height: auto; padding: 32rem 20rem 0; display: flex; flex-direction: column; gap: 24rem; }
+  .ag__steps { width: auto; }
+  .ag__stepText { font-size: 18rem; }
+  .ag__divider { display: none; }
+  .ag__img { width: 350rem; height: 350rem; }
+  .ag__right { width: auto; height: auto; gap: 24rem; }
+
+  .tools__title { padding: 0 20rem; }
+  .tools__list { width: auto; margin: 40rem 20rem 0; }
+  .tools__grid { grid-template-columns: 1fr; row-gap: 36rem; }
+  .tool__name { font-size: 28rem; }
+  .tools__pin { display: flex; flex-direction: column; }
+  .tools__stage { order: -1; height: auto; }
+  .tools__window { position: relative; top: auto; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+
+  .tm__title { width: auto; padding: 0 16rem; }
+  .tm__track { margin-top: 36rem; padding: 0 20rem; overflow-x: auto; width: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .tm__card { width: 300rem; flex-direction: column; scroll-snap-align: start; }
+  .tm__card.is-peek { display: none; }
+  .tm__img { width: 300rem; height: 300rem; }
+  .tm__text { width: auto; height: auto; gap: 20rem; }
+  .tm__stat { font-size: 48rem; }
+
+  .ft { height: 220rem; }
+  .ft__nav .navrow__links { display: none; }
+  .ft__mark { width: 350rem; height: 93.24rem; bottom: 24rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}

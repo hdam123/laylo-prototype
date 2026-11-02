@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Laylo — Presentation</title>
+  <!-- Presentation shell: shows Version A (index.html), A2 (a2.html), B (v2.html) or C (v3.html) full-screen,
+       with a small switch at the bottom left. No version is modified; each runs as-is in the frame.
+       Shortcut: press V to step to the next version. The URL hash (#a / #a2 / #b / #c) remembers the choice. -->
+  <style>
+    @font-face { font-family: "Saans"; src: url("./fonts/Saans-TRIAL-SemiBold.otf") format("opentype"); font-weight: 600; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #1f1f1f; }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #1f1f1f; }
+    .switch {
+      position: fixed; left: 14px; bottom: 14px; z-index: 10;
+      display: flex; gap: 2px; padding: 3px; border-radius: 999px;
+      background: rgba(31, 31, 31, .5); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .16), 0 8px 24px rgba(0, 0, 0, .25);
+      opacity: .6; transition: opacity .3s ease;
+    }
+    .switch:hover, .switch:focus-within { opacity: 1; }
+    .switch button {
+      min-width: 24px; height: 24px; padding: 0 6px; border: 0; margin: 0; border-radius: 999px; cursor: pointer;
+      background: transparent; color: #fff; font: 600 10px/1 "Saans", "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: .04em; text-transform: uppercase; transition: background .25s ease;
+    }
+    .switch button:hover { background: rgba(255, 255, 255, .12); }
+    .switch button[aria-pressed="true"] { background: #675dff; }
+  </style>
+</head>
+<body>
+  <iframe id="site" title="Laylo homepage prototype"></iframe>
+  <div class="switch" role="group" aria-label="Homepage version">
+    <button type="button" data-v="a" aria-label="Version A" title="Version A: original landing scroll (press V to switch)">A</button>
+    <button type="button" data-v="a2" aria-label="Version A2" title="Version A2: auto-advancing landing, no pin (press V to switch)">A2</button>
+    <button type="button" data-v="b" aria-label="Version B" title="Version B: split landing scroll (press V to switch)">B</button>
+    <button type="button" data-v="c" aria-label="Version C" title="Version C: full-bleed landing scroll (press V to switch)">C</button>
+  </div>
+  <script>
+    const PAGES = { a: "./index.html", a2: "./a2.html", b: "./v2.html", c: "./v3.html" };
+    const ORDER = Object.keys(PAGES);
+    const frame = document.getElementById("site");
+    const buttons = document.querySelectorAll(".switch button");
+    let current = null;
+
+    function show(v) {
+      if (!PAGES[v] || v === current) return;
+      current = v;
+      history.replaceState(null, "", "#" + v);
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
+      frame.src = PAGES[v];
+    }
+    const flip = () => show(ORDER[(ORDER.indexOf(current) + 1) % ORDER.length]);
+    const onKey = (e) => {
+      const t = e.target;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
+      if (e.key === "v" || e.key === "V") flip();
+    };
+
+    buttons.forEach((b) => b.addEventListener("click", () => show(b.dataset.v)));
+    window.addEventListener("keydown", onKey);
+    // Keep the shortcut working while the page inside the frame has focus, and give it focus
+    // so wheel and arrow-key scrolling work straight away.
+    frame.addEventListener("load", () => {
+      try { frame.contentWindow.addEventListener("keydown", onKey); } catch (e) {}
+      frame.contentWindow.focus();
+    });
+
+    const fromHash = location.hash.slice(1);
+    show(PAGES[fromHash] ? fromHash : "a");
+  </script>
+</body>
+</html>

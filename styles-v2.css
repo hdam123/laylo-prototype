@@ -1,0 +1,42 @@
+/* Version B hero only (Figma "Landing Scroll 2", node 82:3). Loaded after styles.css by v2.html.
+   Same units as the rest of the page: 1rem == 1 Figma px. Vertical positions are measured from
+   the Figma frame's centre line (y = 465 of 930), so the layout stays centred at any height. */
+
+.hero2 { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); color: #fff; }
+.hero2__frame { position: relative; width: 1440rem; height: 100%; margin: 0 auto; }
+
+.hero2__title {
+  position: absolute; left: 60rem; top: calc(50% - 161rem); z-index: 2;
+  font-size: 64rem; font-weight: 500; line-height: 0.9; white-space: nowrap;
+}
+.hero2__line { display: block; overflow: hidden; padding-bottom: 0.05em; margin-bottom: -0.05em; }
+.hero2__lineInner { display: block; }
+.hero2__accent { color: var(--purple); }
+.hero2__slot { position: relative; display: inline-block; height: 0.9em; vertical-align: top; overflow: hidden; }
+.hero2__word { position: absolute; left: 0; top: 0; white-space: nowrap; }
+
+.hero2__cta { position: absolute; left: 60rem; top: calc(50% + 132rem); }
+.hero2__cta:hover { background: var(--purple); color: #fff; }
+
+/* Photo column: 429 × 322 images, 18 apart, item 1 centred on the frame's centre line. */
+.hero2__reel { position: absolute; left: 728rem; top: 0; bottom: 0; width: 429rem; }
+.hero2__track {
+  position: absolute; left: 0; top: calc(50% - 161rem - 340rem);
+  display: flex; flex-direction: column; gap: 18rem; will-change: transform;
+}
+.hero2__item { position: relative; width: 429rem; height: 322rem; flex: none; overflow: hidden; background: #2a2a2a; }
+.hero2__item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Second section ("The drop marketing platform that started it all") is brown in Version B
+   (Figma node 83:31). Only this background differs from Version A. */
+.strip { background: #b16944; }
+
+@media (max-width: 767px) {
+  .hero2__frame { width: 100%; }
+  .hero2__title { left: 20rem; top: 104rem; font-size: 40rem; }
+  .hero2__cta { left: 20rem; top: 240rem; }
+  .hero2__reel { left: 20rem; right: 20rem; width: auto; top: 300rem; overflow: hidden; }
+  /* Item 1 sits 20rem below the reel's top edge. */
+  .hero2__track { left: 0; right: 0; top: calc(20rem - 262rem - 18rem); }
+  .hero2__item { width: 100%; height: 262rem; }
+}

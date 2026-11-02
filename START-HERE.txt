@@ -1,0 +1,17 @@
+LAYLO HOMEPAGE PROTOTYPE
+========================
+
+1. Unzip this folder anywhere.
+2. Open Terminal and run (drag serve.py into the window to fill in the path):
+
+     python3 /path/to/laylo/serve.py
+
+3. Open this address in Chrome or Safari:
+
+     http://localhost:5180/present.html
+
+Use the A / B / C switch in the bottom-left corner (or press V) to move between the
+three landing-scroll versions. Everything runs offline; no install needed.
+
+Note: double-clicking the HTML files will not work. Browsers block the page's scripts
+when opened directly from disk, so use the local server in step 2.

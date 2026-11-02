@@ -1,0 +1,24 @@
+/* Version C hero only (Figma "Landing Scroll 3", section 86:2533). Loaded after styles.css by v3.html. */
+
+.hero3 {
+  /* Scale for the photo boxes: the 1440 × 930 Figma frame, scaled to cover the viewport. */
+  --c: max(calc(100vw / 1440), calc(100vh / 930));
+  position: relative; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); color: #fff;
+}
+@supports (height: 100svh) { .hero3 { --c: max(calc(100vw / 1440), calc(100svh / 930)); } }
+
+.hero3__slide { position: absolute; inset: 0; overflow: hidden; will-change: clip-path; }
+.hero3__slide img { position: absolute; max-width: none; object-fit: cover; }
+
+.hero3__title {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
+  font-size: 64rem; font-weight: 500; line-height: 0.9; text-align: center; white-space: nowrap;
+}
+.hero3__line { display: block; overflow: hidden; padding-bottom: 0.05em; margin-bottom: -0.05em; }
+.hero3__lineInner { display: block; }
+.hero3__slot { position: relative; display: inline-block; height: 0.9em; vertical-align: top; overflow: hidden; }
+.hero3__word { position: absolute; left: 50%; top: 0; white-space: nowrap; }
+
+@media (max-width: 767px) {
+  .hero3__title { font-size: 34rem; width: 350rem; white-space: normal; }
+}
