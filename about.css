@@ -1,0 +1,178 @@
+/* About page. Loaded after styles.css and cs.css; same units: 1rem == 1 Figma px on the 1440 frame. */
+
+.ab-purple { color: var(--purple); }
+.ab-head { display: flex; flex-direction: column; align-items: center; gap: 14rem; text-align: center; }
+/* Type follows the homepage scale: 48 headlines (.h-xl), 14/1.18 body, 10 bold caps labels,
+   24 caps names, 20/1.15 statements. */
+.ab-title { }
+.ab-lead { width: 430rem; margin-top: 4rem; font-size: 14rem; line-height: 1.18; }
+.ab-links { display: flex; flex-wrap: wrap; gap: 8rem; }
+/* The team intro uses the homepage step-text size. */
+.ab-team .cs-q24 { font-size: 20rem; line-height: 1.15; }
+
+/* ---------- Hero (dark) ---------- */
+/* Full-bleed photo with the copy centred over it, like the homepage hero. */
+.ab-hero { position: relative; height: 100vh; height: 100svh; min-height: 600rem; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--ink); color: #fff; }
+.ab-hero__img { position: absolute; inset: 0; }
+.ab-hero__img img { width: 100%; height: 115%; margin-top: -7.5%; object-fit: cover; will-change: transform; }
+.ab-hero__img::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, .38); }
+.ab-hero__copy { position: relative; z-index: 2; }
+.ab-hero__copy { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ab-hero__title { margin-top: 14rem; font-size: 48rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
+.ab-hero__sub { width: 430rem; margin-top: 18rem; font-size: 14rem; line-height: 1.18; }
+.ab-hero__cta { display: flex; gap: 10rem; margin-top: 18rem; }
+
+/* ---------- Record wall (the draft's sleeves, one row of four) ---------- */
+.ab-wall { position: relative; padding: 44rem 60rem 48rem; color: var(--ink); background: #ececec; }
+.ab-wall__bar { display: flex; justify-content: space-between; max-width: 1320rem; margin: 0 auto 44rem; font-size: 10rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; color: var(--ink); }
+.ab-wall__bar i { display: inline-block; width: 6rem; height: 6rem; margin-right: 8rem; border-radius: 50%; background: var(--purple); vertical-align: 1rem; }
+.ab-wall__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 56rem; max-width: 1320rem; margin: 0 auto; }
+
+.ab-rec { --label: var(--purple); --label-ink: #fff; position: relative; display: block; min-width: 0; isolation: isolate; perspective: 900px; }
+.ab-rec--0 { --label: #fff; --label-ink: var(--purple); }
+.ab-rec__art { position: relative; display: block; }
+
+.ab-rec__sleeve {
+  position: relative; z-index: 2; display: block; aspect-ratio: 1; overflow: hidden; isolation: isolate; container-type: inline-size;
+  backface-visibility: hidden;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, .12), 0 18rem 30rem -14rem rgba(0, 0, 0, .4);
+  transition: transform .65s var(--ease), box-shadow .65s var(--ease);
+}
+.ab-rec:hover .ab-rec__sleeve, .ab-rec:focus-visible .ab-rec__sleeve { transform: translateY(-4rem); box-shadow: 0 2rem 4rem rgba(0, 0, 0, .12), 0 30rem 40rem -16rem rgba(0, 0, 0, .5); }
+
+.ab-rec__disc {
+  position: absolute; z-index: 1; top: 5%; left: 8%; width: 88%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+  background: repeating-radial-gradient(circle at center, #161616 0, #161616 1px, #2a2a2a 1.5px, #1a1a1a 2.5px);
+  box-shadow: 4rem 10rem 16rem rgba(0, 0, 0, .25); transition: transform .75s var(--ease);
+}
+.ab-rec__disc::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 20deg, transparent 0deg, #ffffff18 45deg, transparent 85deg, transparent 190deg, #ffffff20 225deg, transparent 270deg); }
+.ab-rec__disc > span { position: relative; display: grid; align-content: center; width: 29%; aspect-ratio: 1; border-radius: 50%; background: var(--label); color: var(--label-ink); text-align: center; font-size: 8rem; font-weight: 700; line-height: 1.5; text-transform: uppercase; }
+.ab-rec__disc > span::after { content: ""; position: absolute; left: 47%; top: 47%; width: 6%; aspect-ratio: 1; border-radius: 50%; background: #111; }
+.ab-rec:hover .ab-rec__disc, .ab-rec:focus-visible .ab-rec__disc { transform: translateX(10%) rotate(20deg); }
+
+.ab-rec__lift { position: absolute; right: 5%; bottom: 5%; z-index: 10; width: 30rem; height: 30rem; display: grid; place-items: center; border-radius: 50%; background: #fff; color: var(--ink); font-size: 16rem; opacity: 0; transition: opacity .2s; }
+.ab-rec:hover .ab-rec__lift, .ab-rec:focus-visible .ab-rec__lift { opacity: 1; }
+
+/* Cover type, sized to the sleeve (cqw): corner labels in bold caps, artwork in Die Grotesk caps. */
+.ab-cover__row { position: absolute; left: 7%; right: 7%; z-index: 4; display: flex; justify-content: space-between; gap: 4cqw; font-size: 3cqw; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+.ab-cover__row--top { top: 6%; }
+.ab-cover__row--bottom { bottom: 6%; align-items: flex-end; }
+.ab-rec--0 .ab-rec__sleeve { background: var(--purple); color: #fff; }
+.ab-rec--1 .ab-rec__sleeve { background: var(--blue); color: var(--ink); }
+.ab-rec--2 .ab-rec__sleeve { background: var(--ink); color: #fff; }
+.ab-rec--3 .ab-rec__sleeve { background: #fff; color: var(--ink); }
+
+/* 01: grooves around a white label with the wordmark. */
+.ab-orbit {
+  position: absolute; top: 15%; left: 15%; width: 70%; height: 70%; border-radius: 50%; display: grid; place-items: center;
+  background: repeating-radial-gradient(circle at center, rgba(255, 255, 255, .35) 0, rgba(255, 255, 255, .35) 1px, transparent 1.5px, transparent 5px);
+}
+.ab-orbit__label { width: 38%; height: 38%; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2cqw; background: #fff; color: var(--purple); }
+.ab-orbit__label img { width: 62%; filter: brightness(.12); }
+.ab-orbit__label small { font-size: 2.2cqw; font-weight: 700; text-transform: uppercase; }
+/* 02-04: the cover line, set like the site's headlines. */
+.ab-cover__founders, .ab-cover__team, .ab-cover__mission { position: absolute; left: 7%; font-weight: 500; line-height: .9; text-transform: uppercase; }
+.ab-cover__founders { top: 22%; font-size: 22cqw; }
+.ab-rec--1 .ab-rec__sleeve::before { content: ""; position: absolute; inset: 52% -20% -40%; border-radius: 50%; border: 1px solid rgba(31, 31, 31, .25); box-shadow: 0 0 0 5cqw rgba(255, 255, 255, .35), 0 0 0 10cqw rgba(255, 255, 255, .2); }
+.ab-cover__team { top: 18%; font-size: 15cqw; }
+.ab-cover__team em { font-style: normal; color: var(--purple); }
+.ab-cover__stamp { position: absolute; right: 7%; top: 58%; width: 26%; aspect-ratio: 1; display: grid; place-content: center; border: 1.5px solid currentColor; border-radius: 50%; text-align: center; transform: rotate(14deg); font-size: 3cqw; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+.ab-cover__mission { top: 22%; font-size: 22cqw; }
+.ab-cover__drop { position: absolute; right: 9%; bottom: 17%; width: 22%; fill: var(--purple); }
+.ab-ic { display: inline-block; width: 1.15em; height: 1.15em; fill: currentColor; vertical-align: -.2em; }
+
+/* Caption under each cover. */
+.ab-rec__caption { position: relative; display: flex; align-items: baseline; gap: 10rem; padding: 18rem 0 0; white-space: nowrap; }
+.ab-rec__n { font-size: 10rem; font-weight: 700; line-height: 1.2; color: #6b6b6b; }
+.ab-rec__title { font-size: 18rem; font-weight: 500; line-height: 1; text-transform: uppercase; }
+.ab-rec__sub { margin-left: auto; font-size: 14rem; line-height: 1.18; color: #6b6b6b; transition: color .3s; }
+.ab-rec:hover .ab-rec__sub { color: var(--ink); }
+
+/* ---------- Photo band ---------- */
+.ab-band { position: relative; height: 680rem; background: var(--ink); overflow: hidden; }
+.ab-band__img { position: absolute; inset: 0; overflow: hidden; }
+.ab-band__img img { width: 100%; height: 120%; margin-top: -10%; object-fit: cover; will-change: transform; }
+.ab-band__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, .55), transparent 55%); }
+.ab-band__copy { position: absolute; left: 60rem; bottom: 56rem; z-index: 2; color: #fff; text-align: left; }
+
+/* ---------- Prologue (blue) ---------- */
+.ab-story { padding: 110rem 60rem 110rem; background: var(--blue); color: var(--ink); }
+.ab-story__text { width: 480rem; margin: 40rem auto 0; display: flex; flex-direction: column; gap: 14rem; text-align: center; font-size: 14rem; line-height: 1.18; }
+.ab-story__turn { font-weight: 600; }
+.ab-story__bridge { margin-top: 10rem; font-size: 20rem; font-weight: 500; line-height: 1.15; }
+.ab-timeline { display: flex; justify-content: center; gap: 72rem; margin: 56rem auto 0; padding: 0; list-style: none; text-align: center; font-size: 14rem; line-height: 1.18; }
+.ab-timeline li { display: flex; flex-direction: column; gap: 8rem; }
+.ab-timeline__year { font-size: 36rem; font-weight: 500; line-height: .9; color: var(--purple); }
+
+/* ---------- Founders (white) ---------- */
+.ab-founders { padding: 110rem 60rem 110rem; background: #fff; color: var(--ink); }
+.ab-duo { display: grid; grid-template-columns: repeat(2, 652rem); gap: 16rem; justify-content: center; margin-top: 64rem; }
+.ab-person { display: grid; grid-template-columns: 318rem 318rem; gap: 16rem; }
+.ab-person__img { width: 318rem; height: 318rem; overflow: hidden; background: #ececec; }
+.ab-person__img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter .6s var(--ease); }
+.ab-person:hover .ab-person__img img { filter: none; }
+.ab-person__copy { display: flex; flex-direction: column; justify-content: space-between; padding-top: 10rem; border-top: 1px solid var(--ink); }
+.ab-person__copy .cs-card__name { margin-top: 14rem; }
+.ab-person__bio { margin-top: 14rem; }
+
+/* ---------- The Band (dark) ---------- */
+.ab-team { padding: 110rem 60rem 110rem; background: var(--ink); color: #fff; }
+.ab-team__grid { display: grid; grid-template-columns: repeat(3, 429rem); gap: 16rem; justify-content: center; margin-top: 70rem; }
+.ab-team__intro { display: flex; flex-direction: column; justify-content: space-between; height: 429rem; padding-top: 12rem; border-top: 1px solid rgba(255, 255, 255, .5); }
+.ab-team__join { display: flex; flex-direction: column; align-items: flex-start; gap: 14rem; }
+.ab-member .cs-card__img { width: 429rem; height: 429rem; background: #2a2a2a; }
+.ab-member__bio { display: block; margin-top: 14rem; color: #f1f1f1; opacity: .75; }
+
+/* ---------- Mission (light blue): the homepage pillars layout (styles.css .pillars) ---------- */
+.ab-mission { padding: 110rem 60rem 110rem; background: var(--blue); color: var(--ink); }
+.ab-mission__pillars { max-width: 1320rem; margin: 64rem auto 0; }
+.ab-mission .pillar__head { padding-top: 12rem; border-top: 1px solid var(--ink); }
+.ab-mission .pillar__name { margin-top: 18rem; }
+.ab-mission .pillar__intro { margin-top: 12rem; opacity: .8; }
+
+/* ---------- News (white): three story cards ---------- */
+.ab-news { padding: 110rem 60rem 110rem; background: #fff; color: var(--ink); }
+.ab-news__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16rem; max-width: 1320rem; margin: 56rem auto 0; }
+.ab-story-card { display: flex; flex-direction: column; align-items: flex-start; gap: 12rem; color: inherit; }
+.ab-story-card__img { display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: #ececec; }
+.ab-story-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.ab-story-card:hover .ab-story-card__img img { transform: scale(1.04); }
+.ab-story-card .cs-label { margin-top: 4rem; color: #6b6b6b; }
+.ab-story-card__title { font-size: 24rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
+.ab-story-card__cta { margin-top: auto; }
+.ab-story-card:hover .ab-story-card__cta { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+
+/* Floating chapter switch: a little wider than the drop filter so "Prologue" fits. */
+.ab-switch .cs-filter__btn, .ab-switch .cs-filter__ind { width: 84rem; }
+.ab-switch .cs-filter__ind { transform: translateX(calc(var(--i) * 88rem)); }
+
+/* ---------- Mobile: stacked, no pin ---------- */
+@media (max-width: 767px) {
+  .ab-lead, .ab-hero__sub { width: auto; }
+  .ab-hero__copy { padding: 0 20rem; }
+  .ab-hero__title { font-size: 32rem; }
+  .ab-hero__cta { flex-wrap: wrap; justify-content: center; }
+  .ab-wall { padding: 28rem 20rem; }
+  .ab-wall__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36rem 28rem; }
+  .ab-rec__sub { display: none; }
+  .ab-rec__title { font-size: 14rem; }
+  .ab-rec__disc > span { font-size: 5rem; }
+  .ab-band { height: 420rem; }
+  .ab-band__copy { left: 20rem; bottom: 28rem; }
+  .ab-story, .ab-founders, .ab-team, .ab-news, .ab-mission { padding: 70rem 20rem; }
+  .ab-news__grid { grid-template-columns: 1fr; gap: 40rem; margin-top: 40rem; }
+  .ab-mission__pillars { margin-top: 40rem; }
+  .ab-story__text { width: auto; }
+  .ab-timeline { gap: 24rem; margin-top: 40rem; }
+  .ab-timeline__year { font-size: 28rem; }
+    .ab-duo { grid-template-columns: 1fr; gap: 50rem; margin-top: 40rem; }
+  .ab-person { grid-template-columns: 1fr; }
+  .ab-person__img { width: 350rem; height: 350rem; }
+  .ab-person__copy { gap: 20rem; }
+  .ab-team__grid { grid-template-columns: 1fr; gap: 44rem; margin-top: 44rem; }
+  .ab-team__intro { height: auto; gap: 28rem; }
+  .ab-member .cs-card__img { width: 350rem; height: 350rem; }
+  .ab-switch .cs-filter__btn, .ab-switch .cs-filter__ind { width: 74rem; }
+  .ab-switch .cs-filter__ind { transform: translateX(calc(var(--i) * 78rem)); }
+}

@@ -1,16 +1,91 @@
 import { html, useRef, useLayoutEffect, gsap, rem, A, DESKTOP, MOBILE } from "./lib.js";
-import { PLATFORM_STEPS, FAN_CARD, FAN_PROFILE, BARS } from "./content.js";
+import { PLATFORM_STEPS, FAN_CARD, FAN_PROFILE, BARS, CAPTURE, AI_AGENTS } from "./content.js";
 import { ChannelScreens } from "./channels.js";
 
 // Positions are Figma px (== rem) inside the 1440-wide frame, taken from Landing Page
 // Section 2A (top part) and storyboard frame 2C (bottom part, offset by +1279).
 const Y = { phone: 662, sell: 1279 }; // camera stops (storyboard 2B, 2C)
+// Version A: the capture cards are taller than the icon row they replace, so everything from
+// Fan CRM down sits SHIFT px lower (.pf__shift), and the camera pans to CRM before the fan card shows.
+const SHIFT = 129;
+const CRM_PAN = 200;
 
 const vline = (x, top, h, cls = "") => html`<div class=${"pf__vline pf-draw " + cls} style=${{ left: x + "rem", top: top + "rem", height: h + "rem" }}></div>`;
 const icon = (src, x, y, round, cls) => html`<img class=${"pf__icon " + cls + (round ? " is-round" : "") + (round === "light" ? " is-light" : "")} src=${A(src)} alt="" style=${{ left: x + "rem", top: y + "rem" }} />`;
 const elbow = (src, x, y, w, h, flip, cls) => html`<img class=${"pf-draw pf__elbow " + cls} src=${A(src)} alt="" style=${{ left: x + "rem", top: y + "rem", width: w + "rem", height: h + "rem", transform: flip ? "scaleX(-1)" : undefined }} />`;
 
-// updated (Version A): a fourth "capture fans" icon, a richer Fan CRM card, every message channel
+
+// Version A, "Capture fans": IRL / Socials / Online cards with large imagery, joined into Fan CRM.
+// Cards sit at x 138–1302 (372 wide, 24 apart), y 305–571; the connectors run 571 → 641 (pill top).
+const CAP_X = [138, 534, 930];
+const CapMedia = ({ c }) => {
+  if (c.key === "irl") return html`
+    <div class="pf__capMedia">
+      <img src=${c.img} alt=${c.alt} />
+      <div class="pf__capChip">
+        <span class="pf__qr" aria-hidden="true"></span>
+        <span><b class="fB">${c.chip.title}</b><span class="pf__capValue">${c.chip.value}</span></span>
+      </div>
+    </div>`;
+  if (c.key === "socials") return html`
+    <div class="pf__capMedia">
+      <img src=${c.img} alt=${c.alt} />
+      <div class="pf__capBubbles">
+        <span class="pf__bubble pf__bubble--fan"><img src=${A("fan-avatar.jpg")} alt="" />Replied to your story: <b>${c.reply}</b></span>
+        <span class="pf__bubble pf__bubble--laylo"><img src=${A("logo.svg")} alt="Laylo" />${c.dm}</span>
+      </div>
+    </div>`;
+  return html`
+    <div class="pf__capMedia pf__browser">
+      <div class="pf__browserBar"><i></i><i></i><i></i><span>${c.site}</span></div>
+      <div class="pf__browserBody">
+        <img src=${c.img} alt=${c.alt} />
+        <div class="pf__embed">
+          <b class="fB">${c.form.title}</b>
+          <span class="pf__embedField">${c.form.field}</span>
+          <span class="pf__embedCta">${c.form.cta}</span>
+          <span class="pf__embedBy">Powered by Laylo</span>
+        </div>
+      </div>
+    </div>`;
+};
+
+const CaptureCards = () => html`
+  <div class="pf__capGroup">
+    ${CAPTURE.map((c, i) => html`
+      <article key=${c.key} class=${"pf__cap pf-cap pf__cap--" + c.key} style=${{ left: CAP_X[i] + "rem", top: "305rem" }}>
+        <div class="pf__capHead">
+          <span class="pf__capName fC">${c.name}</span>
+          ${c.key === "socials"
+            ? html`<span class="pf__capIcons">${["icon-instagram.png", "icon-spotify.png", "icon-linktree.png"].map((f) => html`<img key=${f} src=${A(f)} alt="" />`)}</span>`
+            : html`<span class="pf__capSub fA">${c.sub}</span>`}
+        </div>
+        <${CapMedia} c=${c} />
+      </article>`)}
+    <svg class="pf__capLines pf-draw pf-c1" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M324 0 V29 Q324 35 330 35 H714 Q720 35 720 41 V70" />
+      <path d="M1116 0 V29 Q1116 35 1110 35 H726 Q720 35 720 41 V70" />
+      <path d="M720 0 V70" />
+    </svg>
+  </div>`;
+
+// Version A: the AI-agent frame. Wraps Reach and Sell (shift-group coords y 884–1995), with
+// a tag at its top corner, the agent's targeting chips under the Reach phones,
+// and two sales agents either side of the revenue panel.
+const AiFrame = () => html`
+  <div class="pf__ai" aria-hidden="true"></div>
+  <span class="pf__aiTag saans">✦ ${AI_AGENTS.tag}</span>
+  <div class="pf__aiRow">
+    ${AI_AGENTS.chips.map((c) => html`<span key=${c} class="pf__aiChip fA">${c}</span>`)}
+    <span class="pf__aiTiming fA"><span class="pf__aiDot"></span>${AI_AGENTS.timing}</span>
+  </div>
+  ${AI_AGENTS.agents.map((a, i) => html`
+    <div key=${a.name} class=${"pf__agent pf__agent--" + i}>
+      <div class="pf__agentName fB"><span class="pf__aiDot"></span>${a.name}</div>
+      <p class="fA">${a.body}</p>
+    </div>`)}`;
+
+// updated (Version A): IRL / Socials / Online capture cards, a richer Fan CRM card, every message channel
 // beside the SMS phone, ticketing/commerce partners (DICE, Posh, Shotgun, Tixr, Eventbrite,
 // Shopify) for "sell out the drop", and a single revenue counter instead of the bars. Icon rows
 // re-centre and every icon gets its own elbow into the element below.
@@ -18,21 +93,15 @@ function Canvas({ updated }) {
   return html`
     <div class="pf__canvas">
       <!-- Capture fans -->
-      ${updated ? html`
-        ${icon("icon-instagram.png", 506.5, 321, false, "pf-i1")}
-        ${icon("icon-linktree.png", 617.5, 321, false, "pf-i1")}
-        ${icon("icon-spotify.png", 728.5, 321, false, "pf-i1")}
-        ${icon("icon-capture-4.png", 839.5, 321, true, "pf-i1")}
-        ${elbow("s2-vec-151.svg", 553.5, 416, 151, 91, false, "pf-c1")}
-        ${elbow("s2-vec-40-long.svg", 664.5, 416, 40, 91, false, "pf-c1")}
-        ${elbow("s2-vec-40-long.svg", 735.5, 416, 40, 91, true, "pf-c1")}
-        ${elbow("s2-vec-151.svg", 735.5, 416, 151, 91, true, "pf-c1")}` : html`
+      ${updated ? html`<${CaptureCards} />` : html`
         ${icon("icon-instagram.png", 562, 321, false, "pf-i1")}
         ${icon("icon-linktree.png", 673, 321, false, "pf-i1")}
         ${icon("icon-spotify.png", 784, 321, false, "pf-i1")}
         ${elbow("s2-vec1.svg", 608.5, 416, 96, 91, false, "pf-c1")}
         ${elbow("s2-vec2.svg", 735.5, 416, 96, 91, true, "pf-c1")}
         ${vline(720, 416, 91, "pf-c1")}`}
+      <div class=${updated ? "pf__shift" : "pf__noshift"} style=${updated ? { top: SHIFT + "rem" } : undefined}>
+      ${updated && html`<${AiFrame} />`}
       <div class="pf__pill saans">Fan CRM</div>
       ${updated ? html`
         <div class="pf__card pf__card--rich fA">
@@ -105,6 +174,7 @@ function Canvas({ updated }) {
               <span class="pf__barValue" data-value=${b.value}>${b.value.toLocaleString("en-US")}</span>
             </div>`)}
         </div>`}
+      </div>
     </div>
   `;
 }
@@ -135,9 +205,12 @@ export function Platform({ updated = false } = {}) {
         gsap.set(labels.slice(1), { opacity: 0, x: 30 });
         gsap.set(conns, { scaleX: 0, transformOrigin: "left center" });
 
-        // The icons pop in while the section scrolls into view, so it never arrives blank.
-        gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 75%", end: "top 15%", scrub: 0.7 } })
-          .fromTo(".pf-i1", pop, { ...popped, stagger: 0.18 }, 0);
+        // The icons (or Version A's capture cards) arrive while the section scrolls into view, so it never arrives blank.
+        const intro = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 75%", end: "top 15%", scrub: 0.7 } });
+        if (updated) intro.fromTo(".pf-cap", { y: 70, opacity: 0 }, { y: 0, opacity: 1, ease: "power3.out", stagger: 0.15 }, 0)
+          .fromTo(".pf__capChip, .pf__bubble, .pf__embed", { y: 12, opacity: 0 }, { y: 0, opacity: 1, ease: "power2.out", stagger: 0.08 }, 0.4);
+        else intro.fromTo(".pf-i1", pop, { ...popped, stagger: 0.18 }, 0);
+        const shift = updated ? SHIFT : 0;
 
         const tl = gsap.timeline({
           defaults: { ease: "none", duration: 0.6 },
@@ -157,6 +230,8 @@ export function Platform({ updated = false } = {}) {
           // 2A — Capture fans, step by step once pinned: connectors → Fan CRM → Jordan R. card
           .fromTo(".pf-c1", draw, { ...drawn, duration: 0.6 }, 0.05)
           .fromTo(".pf__pill", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, ease: "back.out(2)", duration: 0.4 }, 0.55)
+          // Version A: follow the flow down from the capture cards to Fan CRM and the fan card.
+          .to(canvas, { y: cam(updated ? CRM_PAN : 0), duration: updated ? 0.7 : 0.001, ease: "power2.inOut" }, 0.6)
           .fromTo(".pf__card", { y: 60, opacity: 0 }, { y: 0, opacity: 1, ease: "power3.out", duration: 0.6 }, 0.75)
           .fromTo(".pf__cardName, .pf__cardSub, .pf__avatar, .pf__score, .pf__tag, .pf__stat", { y: 14, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.04, duration: 0.4, ease: "power2.out" }, 0.95)
           .fromTo(".pf__row", { "--rule": 0, opacity: 0 }, { "--rule": 1, opacity: 1, stagger: 0.09, duration: 0.4, ease: "power2.out" }, 1.05)
@@ -165,7 +240,7 @@ export function Platform({ updated = false } = {}) {
           // 2A → 2B — Message everyone in one send
           .addLabel("toPhone")
           .fromTo(".pf-c2", draw, { ...drawn, duration: 0.45 }, "toPhone")
-          .to(canvas, { y: cam(Y.phone), duration: 1.3, ease: "power2.inOut" }, "toPhone")
+          .to(canvas, { y: cam(Y.phone + shift), duration: 1.3, ease: "power2.inOut" }, "toPhone")
           .fromTo(".pf__phone", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "toPhone+=0.3")
           // Version A: the other channels fan out from the centre phone.
           .fromTo(".pf__side", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out", stagger: { each: 0.1, from: "center" } }, "toPhone+=0.55")
@@ -179,7 +254,7 @@ export function Platform({ updated = false } = {}) {
           // 2B → 2C — Sell out the drop
           .addLabel("toSell")
           .fromTo(".pf-c3", draw, { ...drawn, duration: 0.5 }, "toSell")
-          .to(canvas, { y: cam(Y.sell), duration: 1.4, ease: "power2.inOut" }, "toSell+=0.1")
+          .to(canvas, { y: cam(Y.sell + shift), duration: 1.4, ease: "power2.inOut" }, "toSell+=0.1")
           .to(track, { x: centerOn(2), duration: 1, ease: "power3.inOut" }, "toSell+=0.3")
           .to(labels[1], { opacity: 0.2, duration: 0.6 }, "toSell+=0.3")
           .to(conns[1], { scaleX: 1, duration: 0.5, ease: "power2.out" }, "toSell+=0.55")
@@ -190,6 +265,15 @@ export function Platform({ updated = false } = {}) {
           .addLabel("bars", "toSell+=1.8")
           .fromTo(".pf__barFill", { scaleX: 0 }, { scaleX: 1, duration: 0.9, stagger: 0.12, ease: "power2.out" }, "bars");
         if (!q(".pf__barFill").length) tl.to({}, { duration: 0.001 }, "bars");
+
+        // Version A: the AI frame draws down around Reach as the fan profile hands over, then
+        // the sales agents come up beside the revenue panel.
+        if (updated) {
+          tl.fromTo(".pf__ai", { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 2.6, ease: "power1.inOut" }, "toPhone+=0.05")
+            .fromTo(".pf__aiTag", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, "toPhone+=0.2")
+            .fromTo(".pf__aiChip, .pf__aiTiming", { y: 14, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.4, ease: "power2.out" }, "toPhone+=0.9")
+            .fromTo(".pf__agent", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.15, duration: 0.5, ease: "power3.out" }, "toSell+=1.5");
+        }
 
         q(".pf__barValue").forEach((el, i) => {
           const target = +el.dataset.value;
@@ -203,7 +287,7 @@ export function Platform({ updated = false } = {}) {
       });
     }, root);
     return () => ctx.revert();
-  }, []);
+  }, [updated]);
 
   return html`
     <section class="pf" data-nav="light" id="platform" ref=${root}>
@@ -218,7 +302,7 @@ export function Platform({ updated = false } = {}) {
             <div class="pf__track fB">
               ${PLATFORM_STEPS.map((s, i) => html`
                 ${i > 0 && html`<span class="pf__conn" key=${"c" + i}></span>`}
-                <span class="pf__label" key=${s}>${s}</span>`)}
+                <span class="pf__label" key=${s}>${s}${updated && i > 0 && html`<span class="pf__labelAi saans">✦ AI</span>`}</span>`)}
             </div>
           </div>
         </div>

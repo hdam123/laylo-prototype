@@ -235,6 +235,8 @@ ul { list-style: none; }
   position: absolute; left: 50vw; top: 0; display: flex; align-items: center; gap: 10rem; width: max-content;
   font-size: 24rem; font-weight: 500; line-height: 0.9; text-transform: uppercase; white-space: nowrap; color: #000;
 }
+.pf__label { display: inline-flex; align-items: center; gap: 8rem; }
+.pf__labelAi { padding: 4rem 7rem; border-radius: 20rem; background: var(--purple); color: #fff; font-size: 9rem; font-weight: 600; letter-spacing: .06em; line-height: 1; }
 .pf__conn { display: block; width: 40rem; height: 1px; background: linear-gradient(to left, rgba(0, 0, 0, .2), rgba(102, 102, 102, .04)); }
 /* Diagram window: starts under the step label and fades content out as it passes upward. */
 .pf__window {
@@ -244,6 +246,93 @@ ul { list-style: none; }
 }
 .pf__canvas { position: absolute; left: 50%; top: -250rem; width: 1440rem; height: 2000rem; margin-left: -720rem; will-change: transform; }
 .pf__canvas > * { position: absolute; }
+/* Everything from Fan CRM down; Version A moves it down (platform.js SHIFT) to make room for the capture cards. */
+.pf__shift, .pf__noshift { left: 0; top: 0; width: 1440rem; height: 2000rem; }
+.pf__shift > *, .pf__noshift > * { position: absolute; }
+
+/* Version A, "Capture fans": IRL / Socials / Online cards joined into Fan CRM. */
+.pf__capGroup { left: 0; top: 0; width: 1440rem; height: 700rem; }
+.pf__capGroup > * { position: absolute; }
+.pf__cap {
+  width: 372rem; padding: 14rem; border: 1rem solid #e8e8e8; border-radius: 20rem; background: #fff; z-index: 2; color: #000;
+  box-shadow: 0 18rem 44rem rgba(0, 0, 0, .08), 0 3rem 10rem rgba(0, 0, 0, .04);
+}
+.pf__capHead { display: flex; align-items: baseline; justify-content: space-between; height: 22rem; margin-bottom: 12rem; }
+.pf__capName { font-size: 24rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
+.pf__capSub { font-size: 12rem; color: #6b6b6b; }
+.pf__capIcons { display: flex; gap: 6rem; align-self: center; }
+.pf__capIcons img { width: 18rem; height: 18rem; border-radius: 5rem; }
+.pf__capMedia { position: relative; height: 216rem; border-radius: 12rem; overflow: hidden; background: #eee; }
+.pf__capMedia > img { width: 100%; height: 100%; object-fit: cover; }
+.pf__cap--socials .pf__capMedia > img { object-position: 50% 20%; }
+.pf__capMedia::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(0, 0, 0, .35), transparent 55%); }
+.pf__browser::after { display: none; }
+
+/* IRL: a scan-to-join chip over the concert photo. */
+.pf__capChip {
+  position: absolute; left: 12rem; bottom: 12rem; z-index: 1; display: flex; align-items: center; gap: 10rem;
+  padding: 8rem 12rem 8rem 8rem; border-radius: 12rem; background: #fff; font-size: 11rem; line-height: 1.2;
+  box-shadow: 0 8rem 20rem rgba(0, 0, 0, .18);
+}
+.pf__capChip b { display: block; font-size: 12rem; font-weight: 600; }
+.pf__capValue { color: var(--purple); font-weight: 600; }
+.pf__qr {
+  width: 30rem; height: 30rem; border-radius: 4rem; flex: none;
+  background:
+    conic-gradient(from 90deg at 3rem 3rem, #000 25%, transparent 0) 0 0 / 8rem 8rem,
+    repeating-linear-gradient(45deg, #000 0 2rem, #fff 2rem 4rem);
+  outline: 2rem solid #000; outline-offset: -2rem;
+}
+
+/* Socials: a story reply and Laylo's automatic DM. */
+.pf__capBubbles { position: absolute; left: 12rem; right: 12rem; bottom: 12rem; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 6rem; }
+.pf__bubble { display: inline-flex; align-items: center; gap: 7rem; padding: 6rem 11rem 6rem 6rem; border-radius: 16rem; font-size: 11rem; line-height: 1.2; box-shadow: 0 8rem 20rem rgba(0, 0, 0, .18); }
+.pf__bubble img { width: 20rem; height: 20rem; border-radius: 50%; object-fit: cover; flex: none; }
+.pf__bubble--fan { background: rgba(255, 255, 255, .92); color: #000; }
+.pf__bubble--laylo { align-self: flex-end; background: var(--purple); color: #fff; }
+.pf__bubble--laylo img { border-radius: 0; width: 34rem; height: 10rem; object-fit: contain; filter: brightness(0) invert(1); }
+
+/* Online: the artist's site in a browser, with a Laylo embed form. */
+.pf__browser { display: flex; flex-direction: column; background: #f3f3f3; border: 1rem solid #e4e4e4; }
+.pf__browserBar { display: flex; align-items: center; gap: 4rem; height: 24rem; padding: 0 10rem; flex: none; background: #fff; border-bottom: 1rem solid #e8e8e8; }
+.pf__browserBar i { width: 6rem; height: 6rem; border-radius: 50%; background: #d9d9d9; }
+.pf__browserBar span { margin: 0 auto; padding: 2rem 14rem; border-radius: 6rem; background: #f1f1f1; font-size: 9rem; color: #6b6b6b; }
+.pf__browserBody { position: relative; flex: 1; display: flex; min-height: 0; }
+.pf__browserBody > img { width: 52%; height: 100%; object-fit: cover; object-position: 50% 25%; }
+.pf__embed { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 7rem; padding: 0 12rem; background: #fff; font-size: 9rem; }
+.pf__embed b { font-size: 14rem; font-weight: 600; line-height: 1; text-transform: uppercase; }
+.pf__embedField { padding: 7rem 8rem; border: 1rem solid #dcdcdc; border-radius: 6rem; color: #8a8a8a; }
+.pf__embedCta { padding: 7rem 8rem; border-radius: 20rem; background: var(--purple); color: #fff; text-align: center; font-weight: 600; }
+.pf__embedBy { color: #9a9a9a; font-size: 8rem; text-align: center; }
+
+/* Version A: AI-agent frame around Reach and Sell (platform.js AiFrame), in shift-group coords. */
+.pf__ai {
+  left: 150rem; top: 884rem; width: 1140rem; height: 1111rem; z-index: 0; border-radius: 28rem;
+  border: 1.5rem solid rgba(103, 93, 255, .55);
+  background: linear-gradient(180deg, rgba(103, 93, 255, .07), rgba(103, 93, 255, .02) 40%, rgba(103, 93, 255, .06));
+}
+.pf__aiTag {
+  left: 204rem; top: 902rem; z-index: 3; padding: 6rem 12rem; border-radius: 20rem; background: var(--purple); color: #fff;
+  font-size: 10rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+}
+.pf__aiChip { padding: 5rem 10rem; border: 1rem solid rgba(103, 93, 255, .4); border-radius: 20rem; background: #fff; color: #4a40e0; font-size: 11rem; font-weight: 500; }
+/* Under the Reach phones (their labels end near y 1381; the line to Sell starts at 1440). */
+.pf__aiRow { left: 720rem; top: 1400rem; translate: -50% 0; z-index: 3; display: flex; align-items: center; gap: 6rem; white-space: nowrap; }
+.pf__aiTiming { display: flex; align-items: center; gap: 7rem; margin-left: 10rem; font-size: 11rem; color: #4a40e0; font-weight: 500; }
+.pf__aiDot { width: 7rem; height: 7rem; border-radius: 50%; background: var(--purple); box-shadow: 0 0 0 3rem rgba(103, 93, 255, .2); flex: none; animation: pf-pulse 1.8s ease-in-out infinite; }
+@keyframes pf-pulse { 50% { box-shadow: 0 0 0 6rem rgba(103, 93, 255, 0); } }
+/* The two sales agents flank the revenue panel (x 394–1046, y 1838–1961). */
+.pf__agent {
+  top: 1838rem; width: 196rem; min-height: 123rem; padding: 12rem 14rem; z-index: 3; border-radius: 14rem; background: #fff;
+  border: 1rem solid rgba(103, 93, 255, .3); box-shadow: 0 12rem 30rem rgba(103, 93, 255, .12);
+  font-size: 12rem; line-height: 1.3; color: var(--ink);
+}
+.pf__agent--0 { left: 190rem; }
+.pf__agent--1 { left: 1054rem; }
+.pf__agentName { display: flex; align-items: center; gap: 7rem; margin-bottom: 6rem; font-size: 11rem; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; color: #4a40e0; }
+
+.pf__capLines { left: 0; top: 571rem; width: 1440rem; height: 70rem; overflow: visible; z-index: 1; fill: none; stroke: #1f1f1f; stroke-opacity: .55; stroke-width: 1; }
+.pf__capLines path { vector-effect: non-scaling-stroke; }
 .pf__icon { width: 95rem; height: 95rem; z-index: 2; }
 .pf__icon.is-round { border-radius: 24rem; }
 .pf__icon.is-light { box-sizing: border-box; border: 1.5rem solid #e4e4e4; background: #fff; object-fit: contain; }
@@ -380,7 +469,7 @@ ul { list-style: none; }
 .pf__barValue { flex: 1; text-align: right; font-variant-numeric: tabular-nums; }
 
 /* Version A: one revenue counter in place of the bars, same panel footprint. */
-.pf__panel--rev { padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; text-align: center; }
+.pf__panel--rev { background: #fff; border: 1rem solid rgba(103, 93, 255, .3); box-shadow: 0 12rem 30rem rgba(103, 93, 255, .12); padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rem; text-align: center; }
 .pf__revLabel { font-size: 11rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6b6b6b; }
 .pf__revValue { font-size: 48rem; font-weight: 500; line-height: 1; color: var(--purple); font-variant-numeric: tabular-nums; }
 .pf__revValue .pf__barValue { flex: none; }
@@ -477,6 +566,30 @@ ul { list-style: none; }
 /* Cards in a row stretch to the same height; auto margin pins every CTA to the bottom edge. */
 .tool .pill { margin-top: auto; }
 
+/* Pillars layout (tools.js): Capture / Convert / AI Agents as three vertical lists, all on one screen. */
+.tools--pillars { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; }
+.tools__frame { height: auto; min-height: 800rem; padding: 94rem 60rem 70rem; }
+.tools__heading { color: #000; }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16rem; margin-top: 56rem; }
+.pillar { display: flex; flex-direction: column; }
+.pillar__name { font-size: 36rem; font-weight: 500; line-height: 1; text-transform: uppercase; color: var(--ink); }
+.pillar__intro { margin-top: 8rem; font-size: 14rem; line-height: 1.2; color: var(--ink); opacity: .6; }
+.pillar__list { margin-top: 22rem; }
+.ptool { border-top: 1px solid rgba(31, 31, 31, .12); }
+.ptool:last-child { border-bottom: 1px solid rgba(31, 31, 31, .12); }
+.ptool__row { display: grid; grid-template-columns: 22rem 1fr; align-items: center; gap: 12rem; width: 100%; padding: 11rem 0; text-align: left; color: var(--ink); }
+.ptool__icon.tool__icon { width: 22rem; height: 22rem; }
+.ptool__name { font-size: 18rem; font-weight: 500; line-height: 1; }
+.ptool.is-open .ptool__icon { background-color: var(--purple); transform: none; }
+/* The open tool's copy and CTA slide down under its row. */
+.ptool__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
+.ptool.is-open .ptool__more { grid-template-rows: 1fr; }
+.ptool__inner { overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; gap: 12rem; padding-left: 34rem; }
+.ptool__body { padding-top: 0; font-size: 14rem; line-height: 1.2; color: var(--ink); opacity: 0; transition: opacity .3s; }
+.ptool.is-open .ptool__body { opacity: .8; transition-delay: .12s; }
+.ptool.is-open .ptool__inner { padding-bottom: 16rem; }
+.ptool__inner .pill { margin-bottom: 2rem; }
+
 /* ---------- Testimonials (Section 9) ---------- */
 .tm { position: relative; background: var(--ink); color: #fff; }
 .tm__pin { position: relative; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--ink); }
@@ -568,6 +681,8 @@ ul { list-style: none; }
   /* Diagram keeps its desktop geometry, zoomed to fit. zoom also scales the window's own offset. */
   .pf__window { zoom: 0.55; top: calc(236rem / 0.55); }
   .pf__canvas { top: -270rem; }
+  /* The capture cards are wider than the zoomed window; shrink them toward the Fan CRM pill. */
+  .pf__capGroup { transform: scale(.6); transform-origin: 720rem 641rem; }
 
   .ag__pin, .tools__pin, .tm__pin { height: auto; display: block; padding: 90rem 0 60rem; }
   .ag__title, .ag__sub, .ag__tabs, .ag__body, .ag__steps, .ag__right, .ag__img, .ag__divider,
@@ -605,4 +720,12 @@ ul { list-style: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; }
+}
+
+/* Pillars on mobile: stacked; tapping a row opens it (one open tool per pillar, as on desktop). */
+@media (max-width: 767px) {
+  .tools--pillars { min-height: 0; }
+  .tools__frame { min-height: 0; padding: 80rem 20rem 60rem; }
+  .pillars { grid-template-columns: 1fr; gap: 48rem; margin-top: 36rem; }
+  .pillar__name { font-size: 30rem; }
 }

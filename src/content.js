@@ -30,6 +30,29 @@ export const STRIP = [
 
 export const PLATFORM_STEPS = ["Capture fans", "Message everyone in one send", "Sell out the drop"];
 
+// Version A: AI agents take over once a fan profile exists. One frame groups the stages where
+// they work (Reach and Sell), after Legora's layered "stack". Copy is PLACEHOLDER.
+export const AI_AGENTS = {
+  tag: "AI agents",
+  chips: ["Right message", "Right time", "Right channel"],
+  timing: "Sending at 6:02 PM, each fan’s peak open time",
+  agents: [
+    { name: "Ticket Sales Agent", body: "312 RSVPs haven’t bought yet. Texting them the presale link." },
+    { name: "Abandoned Cart Agent", body: "48 carts left open. Nudging them with a code, in your voice." },
+  ],
+};
+
+// Version A, "Capture fans": the three places Laylo captures fans (client lo-fi + meeting notes).
+// Copy is PLACEHOLDER: Laylo will align it with the broader capture story.
+export const CAPTURE = [
+  { key: "irl", name: "IRL", sub: "Live events", img: A("s3-after.jpg"), alt: "Artist on stage in front of a festival crowd",
+    chip: { title: "Scan to join the list", value: "+2,431 tonight" } },
+  { key: "socials", name: "Socials", sub: "Stories, posts & DMs", img: A("strip-14.jpg"), alt: "Artist portrait",
+    reply: "DROP", dm: "Here’s your early access link ↗" },
+  { key: "online", name: "Online", sub: "The artist’s website", img: A("hero-show.jpg"), alt: "Artist photo on their website",
+    site: "diplo.com", form: { title: "Join the list", field: "Phone number", cta: "Get early access" } },
+];
+
 export const FAN_CARD = [
   ["CONTACT", "401.985.9925"],
   ["LOCATION", "Brooklyn, New York"],
@@ -132,6 +155,7 @@ const T = (icon) => A(`tools/${icon}.svg`);
 export const TOOL_GROUPS = [
   {
     label: "Capture",
+    intro: "Turn hype into fans you own.", // PLACEHOLDER copy
     tools: [
       { icon: T("outdoor_garden"), name: "Drops", body: "High-converting drop pages and RSVP cards — the most powerful way to capture signups on landing pages. Convert 7× more fans.", cta: "Build your first drop", action: "start" },
       { icon: T("group"), name: "Fan profiles", body: "Laylo automatically enriches fan profiles from your list with ticket, merch, and music data.", cta: "Explore fan profiles", action: "learn" },
@@ -145,6 +169,7 @@ export const TOOL_GROUPS = [
   },
   {
     label: "Convert",
+    intro: "Reach them where they already are.", // PLACEHOLDER copy
     tools: [
       { icon: T("chat"), name: "SMS", body: "Send SMS messages and drop notifications directly to fans from a custom phone number.", cta: "Light up your line", action: "start" },
       { icon: T("sms"), name: "Branded RCS", body: "Transform messages into a branded fan experience. The next generation of SMS, with verified branding.", cta: "Own your branding", action: "start" },
@@ -156,6 +181,7 @@ export const TOOL_GROUPS = [
   },
   {
     label: "AI Agents",
+    intro: "Agents that keep selling after the drop.", // PLACEHOLDER copy
     tools: [
       { icon: T("file_export"), name: "Abandoned Cart", body: "Send personalized texts in your voice, with a discount code if they need a nudge. No setup needed.", cta: "Discover this agent", action: "learn" },
       { icon: T("photo_camera"), name: "UGC", body: "Finds fan moments worth keeping, and connects with UGC tools you already use for permission & access.", cta: "Discover this agent", action: "learn" },
@@ -175,4 +201,41 @@ export const TESTIMONIALS = [
   { img: A("hero-presale.jpg"), crop: { w: 108.02, h: 104.89, l: -6.53, t: -2.45 }, stat: "$12.50", label: "CPA vs $30 typical", quote: "$12.50 CPA with Laylo versus $30 typical CPA for non-Laylo conversions… every dollar you spend on Laylo could be a hundred tickets sold.", who: ["Jesse Lawrence", "CEO & Co-Founder, FanIQ"] },
   // OPEN SLOT: stand-in from the Figma design until the fifth quote is chosen.
   { img: A("t-hoodie.jpg"), crop: { w: 118.62, h: 118.62, l: -9.31, t: -9.26 }, stat: "$180K", label: "From one text", quote: "We made about $180K from a single text.", who: ["Rhys Jackson", "Founder, TELETECH"] },
+];
+
+// Version A hero (hero-demo.js), from the client's rolling-frames example and meeting notes.
+// Scroll moves between use cases; on the right, each one loops on a phone: the fan's view, the action,
+// and its payoff (toast) floating out of the phone. Toast copy and phone numbers are PLACEHOLDER.
+const HD = (name) => A(`hero-demo/${name}`);
+export const HERO_CASES = [
+  {
+    key: "tour", word: "TOUR", img: A("hero-olivia.jpg"),
+    artist: "Olivia Dean", avatar: A("hero-olivia.jpg"), art: HD("olivia-stage.jpg"), title: "The Art of Loving Tour",
+    stops: [
+      { d: "26", m: "Jun", city: "London", venue: "The O2", near: true },
+      { d: "28", m: "Jun", city: "Manchester", venue: "AO Arena" },
+      { d: "02", m: "Jul", city: "Paris", venue: "Zénith" },
+      { d: "05", m: "Jul", city: "Amsterdam", venue: "Ziggo Dome" },
+      { d: "09", m: "Jul", city: "Berlin", venue: "Uber Arena" },
+    ],
+    number: "+44 7700 900412",
+    toast: ["You’re on the list for London", "Presale code by text, 25 June"],
+  },
+  {
+    key: "event", word: "EVENT", img: A("hero-presale.jpg"),
+    eyebrow: "Harborline Fest", art: HD("festival.jpg"), title: "Lineup drops Friday", sub: "RSVP for first access to tickets.",
+    number: "+1 415 555 0132",
+    toast: ["You’re on the list", "We’ll text your ticket code Friday at 10"],
+  },
+  {
+    key: "album", word: "ALBUM", img: A("hero-show.jpg"),
+    eyebrow: "Diplo", art: HD("album.jpg"), title: "New album", sub: "Out Friday. Pre-save and get a text when it drops.",
+    toast: ["Pre-saved ✓", "You’re now following Diplo on Spotify"],
+  },
+  {
+    key: "merch", word: "MERCH", img: A("hero-merch.jpg"),
+    handle: "staticbloom", art: HD("tee.jpg"), comment: "MERCH",
+    product: ["Drop 03 · Black tee", "$35 · code FIRST10"],
+    toast: ["Your Drop 03 link is in your DMs", "Black tee · $35 · code FIRST10"],
+  },
 ];

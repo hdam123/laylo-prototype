@@ -1,7 +1,7 @@
 import { html, gsap, ScrollTrigger, setLenis, useState, ModalContext } from "./lib.js";
 import { Nav } from "./nav.js";
 import { Modal } from "./modal.js";
-import { Hero } from "./hero.js";
+import { Hero } from "./hero-demo.js";
 import { Strip } from "./strip.js";
 import { Platform } from "./platform.js";
 import { Agents } from "./agents.js";
