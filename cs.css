@@ -154,3 +154,65 @@
   .cs-filter__btn { width: 70rem; }
   .cs-filter__ind { width: 70rem; transform: translateX(calc(var(--i) * 74rem)); }
 }
+
+/* ---------- Library (case-studies.js): filters + a grid of magazine covers ---------- */
+/* Type follows the homepage scale: 48 headline, 14/1.18 body, 10 bold caps labels, 24 caps names. */
+.lib-intro { padding: 110rem 60rem 44rem; background: #ececec; color: var(--ink); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.lib-intro__title { color: #000; }
+.lib-intro__sub { width: 430rem; margin: 14rem 0 28rem; font-size: 14rem; line-height: 1.18; }
+
+.lib-filter { display: inline-flex; gap: 4rem; padding: 4rem; border-radius: 30rem; background: #fff; box-shadow: 0 1rem 2rem rgba(0, 0, 0, .04); }
+.lib-filter__btn {
+  height: 34rem; padding: 0 14rem; display: inline-flex; align-items: center; border-radius: 30rem;
+  font-variant-ligatures: none; font-feature-settings: "calt" 0, "dlig" 0; /* Saans otherwise draws (6) as a circled 6 */
+  font-size: 10rem; font-weight: 600; text-transform: uppercase; color: var(--ink); transition: background .3s var(--ease), color .3s var(--ease);
+}
+.lib-filter__btn:not(.is-active):hover { background: #f2f0ff; }
+.lib-filter__btn.is-active { background: var(--purple); color: #fff; }
+.lib-filter--float { background: rgba(255, 255, 255, .78); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 10rem 30rem rgba(0, 0, 0, .18); }
+
+/* Four covers a row. */
+.lib { margin-top: -1px; padding: 10rem 60rem 90rem; background: #ececec; }
+.lib__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36rem 20rem; max-width: 1320rem; margin: 0 auto; }
+.lib__more { display: flex; justify-content: center; margin-top: 48rem; }
+
+.lib-cover {
+  position: relative; z-index: 1; display: flex; flex-direction: column; aspect-ratio: 4 / 5; padding: 10rem 10rem 0; overflow: hidden;
+  background: var(--cover); color: #141414;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, .12), 0 18rem 30rem -16rem rgba(0, 0, 0, .45);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.lib-cover:hover { transform: translateY(-8rem); box-shadow: 0 2rem 4rem rgba(0, 0, 0, .12), 0 30rem 40rem -18rem rgba(0, 0, 0, .55); }
+.lib-cover__img { position: relative; flex: 1; min-height: 0; overflow: hidden; background: #2a2a2a; }
+.lib-cover__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; transition: transform 1s var(--ease); }
+.lib-cover:hover .lib-cover__img img { transform: scale(1.04); }
+/* Masthead in the cover colour, so it reads over light and dark photos alike. */
+.lib-cover__mast {
+  position: absolute; left: 12rem; top: 10rem; width: 76rem; height: 21rem; background: var(--cover);
+  -webkit-mask: url("./assets/logo.svg") left center / contain no-repeat; mask: url("./assets/logo.svg") left center / contain no-repeat;
+}
+.lib-cover__no { position: absolute; right: 10rem; top: 12rem; padding: 4rem 8rem; border-radius: 20rem; background: var(--cover); font-size: 10rem; font-weight: 700; line-height: 1.2; text-transform: uppercase; }
+.lib-cover__band { flex: none; height: 118rem; display: flex; align-items: center; gap: 10rem; padding: 4rem 2rem 6rem; }
+.lib-cover__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6rem; }
+.lib-cover__name { font-size: 24rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
+.lib-cover__head { font-size: 14rem; line-height: 1.18; opacity: .8; }
+.lib-cover__stamp {
+  width: 72rem; height: 72rem; flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3rem;
+  padding: 8rem; border: 1px solid currentColor; border-radius: 50%; text-align: center;
+  font-size: 7rem; font-weight: 700; line-height: 1.2; text-transform: uppercase;
+  transition: transform .6s var(--ease);
+}
+.lib-cover__stamp b { font-size: 18rem; font-weight: 600; line-height: .9; }
+.lib-cover:hover .lib-cover__stamp { transform: rotate(-10deg); }
+
+@media (max-width: 767px) {
+  .lib-intro { padding: 100rem 20rem 32rem; }
+  .lib-intro__sub { width: auto; }
+  .lib-filter { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .lib-filter__btn { flex: none; padding: 0 10rem; }
+  .lib { padding: 0 20rem 60rem; }
+  .lib__grid { grid-template-columns: repeat(2, 1fr); gap: 20rem 12rem; }
+  .lib-cover__band { height: auto; flex-direction: column; align-items: flex-start; padding: 10rem 2rem 12rem; }
+  .lib-cover__stamp { display: none; }
+  .lib-cover__name { font-size: 20rem; }
+}
