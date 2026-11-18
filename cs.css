@@ -122,7 +122,7 @@
 
 /* ---------- CTA ---------- */
 .cs-cta { padding: 106rem 60rem 110rem; background: var(--ink); color: #fff; }
-.cs-cta__copy { width: 430rem; margin: 32rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 20rem; text-align: center; font-size: 14rem; line-height: 1.2; }
+.cs-cta__copy { width: 430rem; margin: 14rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 20rem; text-align: center; font-size: 14rem; line-height: 1.2; }
 
 /* ---------- Mobile: stacked, no pin ---------- */
 @media (max-width: 767px) {

@@ -20,7 +20,7 @@
 .ab-hero__copy { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .ab-hero__title { margin-top: 14rem; font-size: 48rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
 .ab-hero__sub { width: 430rem; margin-top: 18rem; font-size: 14rem; line-height: 1.18; }
-.ab-hero__cta { display: flex; gap: 10rem; margin-top: 18rem; }
+.ab-hero__cta { display: flex; gap: 10rem; margin-top: 8rem; }
 
 /* ---------- Record wall (the draft's sleeves, one row of four) ---------- */
 .ab-wall { position: relative; padding: 44rem 60rem 48rem; color: var(--ink); background: #ececec; }
@@ -118,28 +118,29 @@
 /* ---------- The Band (dark) ---------- */
 .ab-team { padding: 110rem 60rem 110rem; background: var(--ink); color: #fff; }
 .ab-team__grid { display: grid; grid-template-columns: repeat(3, 429rem); gap: 16rem; justify-content: center; margin-top: 70rem; }
-.ab-team__intro { display: flex; flex-direction: column; justify-content: space-between; height: 429rem; padding-top: 12rem; border-top: 1px solid rgba(255, 255, 255, .5); }
+.ab-team__intro { display: flex; flex-direction: column; justify-content: flex-start; gap: 32rem; height: 429rem; padding-top: 12rem; border-top: 1px solid rgba(255, 255, 255, .5); }
 .ab-team__join { display: flex; flex-direction: column; align-items: flex-start; gap: 14rem; }
 .ab-member .cs-card__img { width: 429rem; height: 429rem; background: #2a2a2a; }
 .ab-member__bio { display: block; margin-top: 14rem; color: #f1f1f1; opacity: .75; }
+.ab-member__cta { justify-content: flex-start; margin-top: 16rem; padding-bottom: 0; }
 
 /* ---------- Mission (light blue): the homepage pillars layout (styles.css .pillars) ---------- */
 .ab-mission { padding: 110rem 60rem 110rem; background: var(--blue); color: var(--ink); }
 .ab-mission__pillars { max-width: 1320rem; margin: 64rem auto 0; }
-.ab-mission .pillar__head { padding-top: 12rem; border-top: 1px solid var(--ink); }
-.ab-mission .pillar__name { margin-top: 18rem; }
-.ab-mission .pillar__intro { margin-top: 12rem; opacity: .8; }
+.ab-mission .pillar__head .cs-label { padding-bottom: 8rem; border-bottom: 1px solid var(--ink); }
+.ab-mission .pillar__name { margin-top: 12rem; font-size: 20rem; line-height: 1.15; text-transform: none; }
+.ab-mission .pillar__intro { margin-top: 6rem; opacity: .8; }
 
 /* ---------- News (white): three story cards ---------- */
 .ab-news { padding: 110rem 60rem 110rem; background: #fff; color: var(--ink); }
 .ab-news__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16rem; max-width: 1320rem; margin: 56rem auto 0; }
-.ab-story-card { display: flex; flex-direction: column; align-items: flex-start; gap: 12rem; color: inherit; }
+.ab-story-card { display: flex; flex-direction: column; align-items: flex-start; gap: 6rem; color: inherit; }
 .ab-story-card__img { display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: #ececec; }
 .ab-story-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
 .ab-story-card:hover .ab-story-card__img img { transform: scale(1.04); }
-.ab-story-card .cs-label { margin-top: 4rem; color: #6b6b6b; }
-.ab-story-card__title { font-size: 24rem; font-weight: 500; line-height: .9; text-transform: uppercase; }
-.ab-story-card__cta { margin-top: auto; }
+.ab-story-card .cs-label { margin-top: 10rem; color: #6b6b6b; }
+.ab-story-card__title { font-size: 20rem; font-weight: 500; line-height: 1.15; }
+.ab-story-card__cta { margin-top: 6rem; }
 .ab-story-card:hover .ab-story-card__cta { background: var(--ink); color: #fff; border-color: var(--ink); }
 
 

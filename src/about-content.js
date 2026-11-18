@@ -8,7 +8,7 @@ export const HERO = {
   since: "since 2017.",
   sub: "We’re a team of builders & live entertainment veterans who turned decades of industry experience into the leading drop platform, helping you convert earned hype into connection that lasts.",
   img: "./assets/s3-after.jpg", // photo band
-  bg: "./assets/hero-lineup.jpg", // hero
+  bg: "./assets/about/hero-crowd.webp", // hero
 };
 
 // The four chapters: shown as record sleeves under the hero and as the floating chapter switch.

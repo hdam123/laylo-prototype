@@ -140,7 +140,7 @@ function Hero() {
         <div class="cs-label ab-hero__eyebrow">${HERO.eyebrow}</div>
         <h1 class="ab-hero__title fC">
           <${Lines} lines=${HERO.title} />
-          <span class="mask"><span class="cs-line ab-purple">${HERO.since}</span></span>
+          <span class="mask"><span class="cs-line">${HERO.since}</span></span>
         </h1>
         <p class="ab-hero__sub fA">${HERO.sub}</p>
         <div class="ab-hero__cta">
@@ -233,9 +233,10 @@ function Team() {
           <a key=${p.name} class="cs-card ab-member" href=${p.href} target="_blank" rel="noopener" data-rise=${i + 1}>
             <span class="cs-card__img ab-member__img"><img src=${p.img} alt=${p.name} loading="lazy" /></span>
             <span class="cs-card__name fC">${p.name}</span>
-            <span class="cs-card__row fA"><span>${p.role}</span><span>${p.cta} <${Arrow} /></span></span>
+            <span class="cs-card__row fA"><span>${p.role}</span></span>
             <span class="cs-card__rule"></span>
             <span class="cs-body fA ab-member__bio">${p.bio}</span>
+            <span class="cs-card__row fA ab-member__cta"><span>${p.cta} <${Arrow} /></span></span>
           </a>`)}
       </div>
     </section>`;
@@ -254,7 +255,7 @@ function Mission() {
           <div key=${b.title} class="pillar" data-rise=${i}>
             <div class="pillar__head">
               <div class="cs-label">${String(i + 1).padStart(2, "0")}</div>
-              <h3 class="pillar__name fC">${b.title}</h3>
+              <h3 class="pillar__name fB">${b.title}</h3>
               <p class="pillar__intro fA">${b.body}</p>
             </div>
           </div>`)}
@@ -274,7 +275,7 @@ function News() {
           <a key=${n.title} class="ab-story-card" href=${n.href} target="_blank" rel="noopener" data-rise=${i}>
             <span class="ab-story-card__img"><img src=${n.img} alt="" loading="lazy" /></span>
             <span class="cs-label">Laylo / ${n.source} · ${n.date}</span>
-            <span class="ab-story-card__title fC">${n.title}</span>
+            <span class="ab-story-card__title fB">${n.title}</span>
             <span class="outline-pill saans cs-tag cs-tag--dark ab-story-card__cta">Read more</span>
           </a>`)}
       </div>
