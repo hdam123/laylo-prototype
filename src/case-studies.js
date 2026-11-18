@@ -5,7 +5,7 @@ import { html, gsap, ScrollTrigger, setLenis, useState, useRef, useLayoutEffect,
 import { Nav } from "./nav.js";
 import { Modal } from "./modal.js";
 import { Footer } from "./footer.js";
-import { CATEGORIES, LIBRARY, CTA } from "./cs-content.js";
+import { CATEGORIES, LIBRARY, COVER_COLORS, CTA } from "./cs-content.js";
 
 // Masked headline: each line slides up out of its own mask.
 const Lines = ({ lines, cls = "" }) => html`
@@ -59,15 +59,15 @@ function Filter({ active, onPick, floating = false }) {
     </div>`;
 }
 
-// Magazine cover (client reference: Diplo "New Drop"): the artist photo set into a backdrop in a colour
-// picked from the photo (cs-content.js), the Laylo masthead over the photo, the name set big on the
-// colour band, and a round stamp carrying the one metric (or the drop type when there isn't one).
-// Clicks through to the case study's own page.
+// Magazine cover (client reference: Diplo "New Drop"): the artist photo set into a backdrop from the
+// secondary palette (COVER_COLORS, picked by grid position), the Laylo masthead over the photo, the name
+// set big on the colour band, and a round stamp carrying the one metric (or the drop type when there
+// isn't one). Clicks through to the case study's own page.
 const DROP = { tours: "Tour drop", merch: "Merch drop", music: "Music drop", events: "Event drop" };
-function Cover({ c }) {
+function Cover({ c, i }) {
   const n = LIBRARY.indexOf(c);
   return html`
-    <a class="lib-cover" href=${c.href} target="_blank" rel="noopener" style=${{ "--cover": c.color }}>
+    <a class="lib-cover" href=${c.href} target="_blank" rel="noopener" style=${{ "--cover": COVER_COLORS[i % COVER_COLORS.length] }}>
       <span class="lib-cover__img">
         <img src=${c.img} alt="" loading="lazy" />
         <span class="lib-cover__mast" role="img" aria-label="Laylo"></span>
@@ -117,7 +117,7 @@ function Library({ active, onPick }) {
   }, [active]);
   return html`
     <section class="lib" id="library" ref=${root} data-nav="light">
-      <div class="lib__grid">${items.map((c) => html`<${Cover} key=${c.name} c=${c} />`)}</div>
+      <div class="lib__grid">${items.map((c, i) => html`<${Cover} key=${c.name} c=${c} i=${i} />`)}</div>
       ${active === "featured" && html`<div class="lib__more"><button class="outline-pill saans cs-tag cs-tag--dark" onClick=${() => onPick("all")}>See all ${LIBRARY.length} drops</button></div>`}
     </section>`;
 }

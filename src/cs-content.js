@@ -149,23 +149,27 @@ export const CATEGORIES = [
   { key: "events", label: "Events" },
 ];
 
+// Cover backdrops: the secondary palette (orange, yellow, brown, pink, olive), cycled by grid position
+// so neighbouring covers never share a colour.
+export const COVER_COLORS = ["#EB652B", "#F0B74B", "#A76C4B", "#F3B3D4", "#8A9871"];
+
 export const LIBRARY = [
-  { name: "Sabrina Carpenter", cat: "tours", img: I("sabrina.jpg"), href: CASE("sabrinacarpentersocial"), featured: 1, headline: "Sold out instantly in presale", metric: ["50%", "fewer bots & brokers"] , color: "#f4ad8c" },
-  { name: "The Beaches", cat: "merch", img: I("beaches-merch.jpg"), href: CASE("the-beaches"), featured: 2, headline: "Built the list through IG DMs, giveaways & merch", metric: ["56×", "fan list growth"], color: "#a9cdf5" },
-  { name: "JVKE", cat: "music", img: I("jvke.jpg"), href: CASE("jvke"), featured: 3, headline: "Golden Hour, straight to the fans", metric: ["200K+", "fans collected"] , color: "#7fc4e3" },
-  { name: "CRSSD Fest", cat: "events", img: I("crssd.jpg"), href: CASE("crssd-fest"), featured: 4, headline: "Presale gone in two hours", metric: ["2 hrs", "to sell out presale"] , color: "#f59a4a" },
-  { name: "Wu-Tang Clan & Nike", cat: "merch", img: I("wutang.jpg"), href: CASE("wtc"), featured: 5, headline: "A collab fans couldn’t miss", metric: ["96%", "clicked on drop day"] , color: "#f5c518" },
-  { name: "Outside Lands", cat: "events", img: I("outside.jpg"), href: CASE("outside-lands"), featured: 6, headline: "Fans clicked straight through to tickets", metric: ["139%", "CTR on single-day tickets"] , color: "#ff5a4f" },
-  { name: "Sam Smith", cat: "tours", img: I("samsmith.jpg"), href: CASE("sam-smith"), featured: 7, headline: "Fans lined up for the tour overnight", metric: ["75K+", "sign-ups in 24 hours"] , color: "#e3a989" },
-  { name: "Rosalía", cat: "tours", img: I("rosalia.jpg"), href: CASE("rosalia"), headline: "Sold out worldwide across every date", color: "#f0cfb4" },
-  { name: "VOILÀ", cat: "tours", img: I("voila.jpg"), href: CASE("voila"), headline: "Grew the list with a tour teaser", metric: ["20%", "fan list growth"], color: "#e7e2d6" },
-  { name: "Mark Ambor", cat: "tours", img: I("ambor.jpg"), href: CASE("mark-ambor"), headline: "Built his tour around fan demand" , color: "#dcc5a2" },
-  { name: "GRiZ", cat: "merch", img: I("griz.jpg"), href: CASE("griz"), headline: "His biggest merch sale ever" , color: "#e04a2c" },
-  { name: "Aminé × New Balance", cat: "merch", img: I("amine.jpg"), href: CASE("amine"), headline: "Sold out the sneaker drop" , color: "#f27ab0" },
-  { name: "Japanese Breakfast", cat: "music", img: I("japanese-breakfast.jpg"), href: CASE("japanese-breakfast"), featured: 8, headline: "Turned tour RSVPs into album pre-saves", metric: ["40%", "of RSVPs pre-saved"] , color: "#f0a24a" },
-  { name: "Russ", cat: "music", img: I("russ.jpg"), href: CASE("russ"), headline: "Gave fans a home he owns", metric: ["50K+", "joined Russ World"] , color: "#5fc2c0" },
-  { name: "Wuki", cat: "music", img: I("wuki.jpg"), href: CASE("wuki-beats-i-cant-release"), headline: "Dropped the beats he can’t release", metric: ["83%", "of sign-ups via IG DMs"], color: "#9ad9c5" },
-  { name: "FISHER", cat: "music", img: I("fisher.jpg"), href: CASE("fisher"), headline: "Took the drop to WhatsApp", color: "#e0458f" },
-  { name: "Capitol Hill Block Party", cat: "events", img: I("capitol.jpg"), href: CASE("capitol-hill-block-party"), headline: "More new sign-ups than ever before", color: "#e8a35a" },
-  { name: "Shambhala", cat: "events", img: I("shambhala.jpg"), href: CASE("shambhala-music-festival"), headline: "Thousands of fan numbers in two days" , color: "#9fb4f2" },
+  { name: "Sabrina Carpenter", cat: "tours", img: I("sabrina.jpg"), href: CASE("sabrinacarpentersocial"), featured: 1, headline: "Sold out instantly in presale", metric: ["50%", "fewer bots & brokers"] },
+  { name: "The Beaches", cat: "merch", img: I("beaches-merch.jpg"), href: CASE("the-beaches"), featured: 2, headline: "Built the list through IG DMs, giveaways & merch", metric: ["56×", "fan list growth"] },
+  { name: "JVKE", cat: "music", img: I("jvke.jpg"), href: CASE("jvke"), featured: 3, headline: "Golden Hour, straight to the fans", metric: ["200K+", "fans collected"] },
+  { name: "CRSSD Fest", cat: "events", img: I("crssd.jpg"), href: CASE("crssd-fest"), featured: 4, headline: "Presale gone in two hours", metric: ["2 hrs", "to sell out presale"] },
+  { name: "Wu-Tang Clan & Nike", cat: "merch", img: I("wutang.jpg"), href: CASE("wtc"), featured: 5, headline: "A collab fans couldn’t miss", metric: ["96%", "clicked on drop day"] },
+  { name: "Outside Lands", cat: "events", img: I("outside.jpg"), href: CASE("outside-lands"), featured: 6, headline: "Fans clicked straight through to tickets", metric: ["139%", "CTR on single-day tickets"] },
+  { name: "Sam Smith", cat: "tours", img: I("samsmith.jpg"), href: CASE("sam-smith"), featured: 7, headline: "Fans lined up for the tour overnight", metric: ["75K+", "sign-ups in 24 hours"] },
+  { name: "Rosalía", cat: "tours", img: I("rosalia.jpg"), href: CASE("rosalia"), headline: "Sold out worldwide across every date" },
+  { name: "VOILÀ", cat: "tours", img: I("voila.jpg"), href: CASE("voila"), headline: "Grew the list with a tour teaser", metric: ["20%", "fan list growth"] },
+  { name: "Mark Ambor", cat: "tours", img: I("ambor.jpg"), href: CASE("mark-ambor"), headline: "Built his tour around fan demand" },
+  { name: "GRiZ", cat: "merch", img: I("griz.jpg"), href: CASE("griz"), headline: "His biggest merch sale ever" },
+  { name: "Aminé × New Balance", cat: "merch", img: I("amine.jpg"), href: CASE("amine"), headline: "Sold out the sneaker drop" },
+  { name: "Japanese Breakfast", cat: "music", img: I("japanese-breakfast.jpg"), href: CASE("japanese-breakfast"), featured: 8, headline: "Turned tour RSVPs into album pre-saves", metric: ["40%", "of RSVPs pre-saved"] },
+  { name: "Russ", cat: "music", img: I("russ.jpg"), href: CASE("russ"), headline: "Gave fans a home he owns", metric: ["50K+", "joined Russ World"] },
+  { name: "Wuki", cat: "music", img: I("wuki.jpg"), href: CASE("wuki-beats-i-cant-release"), headline: "Dropped the beats he can’t release", metric: ["83%", "of sign-ups via IG DMs"] },
+  { name: "FISHER", cat: "music", img: I("fisher.jpg"), href: CASE("fisher"), headline: "Took the drop to WhatsApp" },
+  { name: "Capitol Hill Block Party", cat: "events", img: I("capitol.jpg"), href: CASE("capitol-hill-block-party"), headline: "More new sign-ups than ever before" },
+  { name: "Shambhala", cat: "events", img: I("shambhala.jpg"), href: CASE("shambhala-music-festival"), headline: "Thousands of fan numbers in two days" },
 ];
